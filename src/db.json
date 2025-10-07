@@ -1,0 +1,73 @@
+{
+  "products": [
+    {
+      "title": "Quần jeans",
+      "price": 120000,
+      "image": "https://cdn.boo.vn/media/catalog/product/1/_/1.2.21.2.23.001.124.01.60600034_1__4.jpg",
+      "category": "Quần",
+      "description": "123456",
+      "quantity": 4,
+      "id": "68b0"
+    },
+    {
+      "id": "5e6f",
+      "title": "Áo thun",
+      "price": 100000,
+      "category": "Áo ",
+      "quantity": 5,
+      "image": "https://bizweb.dktcdn.net/100/415/697/products/1b-ff9ccc92-6e5d-42e5-b558-41348b582c20.jpg?v=1648869733877",
+      "description": "1234567"
+    }
+  ],
+  "categories": [
+    {
+      "name": "Áo",
+      "description": "123456",
+      "id": "4d2f"
+    },
+    {
+      "id": "257c",
+      "name": "Quần",
+      "description": "457688"
+    }
+  ],
+  "users": [
+    {
+      "id": "2589",
+      "name": "Hoàng Văn Toàn",
+      "username": "toan",
+      "password": "170906",
+      "role": "admin"
+    },
+    {
+      "name": "Toàn",
+      "username": "vtoan",
+      "password": "17092006",
+      "role": "user",
+      "avatar": "",
+      "id": "ebe1"
+    },
+    {
+      "id": "8178",
+      "name": "toàn",
+      "username": "toan17",
+      "password": "170906",
+      "role": "user"
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "text": "a comment about product 1",
+      "productId": null
+    },
+    {
+      "id": "2",
+      "text": "another comment about product 1",
+      "productId": null
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

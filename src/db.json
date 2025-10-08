@@ -10,13 +10,13 @@
       "id": "68b0"
     },
     {
-      "id": "5e6f",
       "title": "Áo thun",
       "price": 100000,
-      "category": "Áo ",
-      "quantity": 5,
-      "image": "https://bizweb.dktcdn.net/100/415/697/products/1b-ff9ccc92-6e5d-42e5-b558-41348b582c20.jpg?v=1648869733877",
-      "description": "1234567"
+      "image": "https://product.hstatic.net/1000332761/product/z4332485822491_373bad858a93470669998e296e72cf2f_1414519fcc074b5e9909da9c45939726_master.jpg",
+      "category": "Áo",
+      "description": "đẹp",
+      "quantity": 3,
+      "id": "d1f7"
     }
   ],
   "categories": [
@@ -26,9 +26,9 @@
       "id": "4d2f"
     },
     {
-      "id": "257c",
       "name": "Quần",
-      "description": "457688"
+      "description": "457688",
+      "id": "257c"
     }
   ],
   "users": [
@@ -40,17 +40,9 @@
       "role": "admin"
     },
     {
-      "name": "Toàn",
+      "id": "4818",
+      "name": "Hoàng Văn Toàn",
       "username": "vtoan",
-      "password": "17092006",
-      "role": "user",
-      "avatar": "",
-      "id": "ebe1"
-    },
-    {
-      "id": "8178",
-      "name": "toàn",
-      "username": "toan17",
       "password": "170906",
       "role": "user"
     }

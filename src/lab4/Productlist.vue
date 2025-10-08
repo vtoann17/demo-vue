@@ -2,6 +2,8 @@
 import { ref, computed, onMounted } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+console.log(API_URL)
 
 const router = useRouter()
 const currentUser = ref(null)
@@ -18,7 +20,7 @@ onMounted(async () => {
 })
 
 const Loadulieu = async () => {
-  const response = await axios.get('http://localhost:3000/products')
+  const response = await axios.get(`${API_URL}/products`)
   if (response.status === 200) products.value = response.data
 }
 

@@ -17,6 +17,15 @@
       "description": "đẹp",
       "quantity": 3,
       "id": "d1f7"
+    },
+    {
+      "id": "16f3",
+      "title": "Áo khoác",
+      "price": 200000,
+      "category": "Áo khoác",
+      "quantity": 4,
+      "image": "https://product.hstatic.net/1000369857/product/akd903_1_tui_1200x1200_0000_layer_23_28151cf2d9cb40d7a0088cbea862962c.jpg",
+      "description": "đẹp"
     }
   ],
   "categories": [
@@ -29,6 +38,11 @@
       "name": "Quần",
       "description": "457688",
       "id": "257c"
+    },
+    {
+      "id": "5c0e",
+      "name": "Áo khoác",
+      "description": "đẹp"
     }
   ],
   "users": [
@@ -43,6 +57,13 @@
       "id": "4818",
       "name": "Hoàng Văn Toàn",
       "username": "vtoan",
+      "password": "170906",
+      "role": "user"
+    },
+    {
+      "id": "0db6",
+      "name": "Toàn",
+      "username": "vtoan17",
       "password": "170906",
       "role": "user"
     }

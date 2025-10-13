@@ -33,7 +33,7 @@ const handleDangNhap = async () => {
     message.value = 'Đăng nhập thành công';
     isSuccess.value = true;
     setTimeout(() => {
-      router.push('/productlist')
+      router.push('/')
     }, 2000)
   } else {
     message.value = 'Đăng nhập thất bại';

@@ -3,29 +3,32 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 
-const categories = ref([])
+const users = ref([])
 const message = ref('')
 const router = useRouter()
 
 const goTo = (path) => router.push(path)
 
-onMounted(() => {
-  loadCategories()
+onMounted(async () => {
+  await loadUsers()
 })
 
-const loadCategories = async () => {
-  const res = await axios.get('http://localhost:3000/categories')
-  if (res.status === 200) categories.value = res.data
+const handleDelete = async (id) => {
+  const isConfirm = confirm(`Bạn có chắc muốn xoá tài khoản ID = ${id}?`)
+  if (isConfirm) {
+    const response = await axios.delete(`http://localhost:3000/users/${id}`)
+    if (response.status === 200) {
+      await loadUsers()
+      message.value = `Đã xoá tài khoản ID ${id} thành công!`
+      setTimeout(() => (message.value = ''), 3000)
+    }
+  }
 }
 
-const handleDelete = async (id) => {
-  if (confirm(`Bạn có chắc muốn xoá danh mục ID = ${id}?`)) {
-    const res = await axios.delete(`http://localhost:3000/categories/${id}`)
-    if (res.status === 200) {
-      message.value = 'Xóa danh mục thành công!'
-      loadCategories()
-      setTimeout(() => (message.value = ''), 2500)
-    }
+const loadUsers = async () => {
+  const response = await axios.get('http://localhost:3000/users')
+  if (response.status === 200) {
+    users.value = response.data
   }
 }
 </script>
@@ -38,9 +41,9 @@ const handleDelete = async (id) => {
       <nav>
         <ul>
           <li @click="goTo('/')"><i class="bi bi-house-door"></i> Trang chủ</li>
-          <li @click="goTo('/admin/products')" class="active"><i class="bi bi-box"></i> Sản phẩm</li>
+          <li @click="goTo('/admin/products')"><i class="bi bi-box"></i> Sản phẩm</li>
           <li @click="goTo('/admin/categories')"><i class="bi bi-tags"></i> Danh mục</li>
-          <li @click="goTo('/admin/users')" ><i class="bi bi-people"></i> Người dùng</li>
+          <li @click="goTo('/admin/users')" class="active"><i class="bi bi-people"></i> Người dùng</li>
           <li @click="goTo('/logout')"><i class="bi bi-box-arrow-right"></i> Đăng xuất</li>
         </ul>
       </nav>
@@ -49,15 +52,15 @@ const handleDelete = async (id) => {
     <!-- Main -->
     <main class="content">
       <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="fw-bold text-primary mb-0">Quản lý danh mục</h3>
-        <router-link class="btn btn-primary btn-sm px-3" to="/addcategory">
-          + Thêm danh mục
+        <h3 class="fw-bold text-primary mb-0">Quản lý tài khoản</h3>
+        <router-link class="btn btn-primary btn-sm px-3" to="/addusers">
+          + Thêm tài khoản
         </router-link>
       </div>
 
       <div class="card shadow border-0 rounded-4 overflow-hidden">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-          <h4 class="mb-0">Danh sách danh mục</h4>
+          <h4 class="mb-0">Danh sách người dùng</h4>
         </div>
 
         <div class="card-body p-0">
@@ -71,31 +74,39 @@ const handleDelete = async (id) => {
             <table class="table table-hover table-bordered align-middle text-center mb-0">
               <thead class="table-primary">
                 <tr>
-                  <th style="width:100px;">ID</th>
-                  <th style="width:300px;">Tên danh mục</th>
-                  <th>Mô tả</th>
-                  <th style="width:180px;">Hành động</th>
+                  <th style="width:80px">ID</th>
+                  <th>Tên người dùng</th>
+                  <th>Tên đăng nhập</th>
+                  <th>Vai trò</th>
+                  <th style="width:180px">Hành động</th>
                 </tr>
               </thead>
 
               <tbody>
-                <tr v-for="item in categories" :key="item.id">
-                  <td>{{ item.id }}</td>
-                  <td class="fw-semibold text-start ps-3">{{ item.name }}</td>
-                  <td class="text-muted">{{ item.description || '—' }}</td>
+                <tr v-for="user in users" :key="user.id">
+                  <td>{{ user.id }}</td>
+                  <td class="fw-semibold text-start ps-3">{{ user.name }}</td>
+                  <td>{{ user.username }}</td>
                   <td>
-                    <button @click="goTo(`/editcategory/${item.id}`)" class="btn btn-sm btn-outline-primary me-2">
+                    <span
+                      :class="user.role === 'admin' ? 'badge bg-danger' : 'badge bg-secondary'"
+                    >
+                      {{ user.role }}
+                    </span>
+                  </td>
+                  <td>
+                    <button @click="goTo(`/edituser/${user.id}`)" class="btn btn-sm btn-outline-primary me-2">
                       Sửa
                     </button>
-                    <button @click="handleDelete(item.id)" class="btn btn-sm btn-outline-danger">
+                    <button @click="handleDelete(user.id)" class="btn btn-sm btn-outline-danger">
                       Xoá
                     </button>
                   </td>
                 </tr>
 
-                <tr v-if="categories.length === 0">
-                  <td colspan="4" class="text-center py-4 text-muted">
-                    Chưa có danh mục nào
+                <tr v-if="users.length === 0">
+                  <td colspan="5" class="text-center py-4 text-muted">
+                    Chưa có tài khoản nào
                   </td>
                 </tr>
               </tbody>
@@ -111,8 +122,6 @@ const handleDelete = async (id) => {
 .admin-layout {
   display: flex;
   height: 100vh;
-  margin: 0;
-  padding: 0;
   background: #f1f3f6;
 }
 

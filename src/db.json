@@ -1,48 +1,80 @@
 {
   "products": [
     {
-      "title": "Quần jeans",
-      "price": 120000,
-      "image": "https://cdn.boo.vn/media/catalog/product/1/_/1.2.21.2.23.001.124.01.60600034_1__4.jpg",
-      "category": "Quần",
-      "description": "123456",
-      "quantity": 4,
-      "id": "68b0"
+      "id": "rg01",
+      "name": "RG Wing Gundam Zero EW",
+      "price": 850000,
+      "image": "https://bizweb.dktcdn.net/100/456/060/files/mo-hinh-rg-wing-gundam-zero-ew-7.png?v=1731385974379",
+      "category": "Real Grade (RG)",
+      "description": "Real Grade Wing Gundam Zero EW tỉ lệ 1/144 – thiết kế cánh thiên thần nổi bật, khớp linh hoạt, chi tiết tinh xảo.",
+      "quantity": 5
     },
     {
-      "title": "Áo thun",
-      "price": 100000,
-      "image": "https://product.hstatic.net/1000332761/product/z4332485822491_373bad858a93470669998e296e72cf2f_1414519fcc074b5e9909da9c45939726_master.jpg",
-      "category": "Áo",
-      "description": "đẹp",
-      "quantity": 3,
-      "id": "d1f7"
+      "id": "mg01",
+      "name": "MG Freedom Gundam 2.0",
+      "price": 1200000,
+      "image": "https://product.hstatic.net/200000326537/product/10371551a7_3e010e962a924d2ca7ea324793688c2d_master.jpg",
+      "category": "Master Grade (MG)",
+      "description": "Master Grade Freedom Gundam 2.0 tỉ lệ 1/100 – nổi bật với đôi cánh lớn, khung xương linh hoạt, tái hiện tuyệt đẹp phiên bản SEED.",
+      "quantity": 4
     },
     {
-      "id": "16f3",
-      "title": "Áo khoác",
-      "price": 200000,
-      "category": "Áo khoác",
-      "quantity": 4,
-      "image": "https://product.hstatic.net/1000369857/product/akd903_1_tui_1200x1200_0000_layer_23_28151cf2d9cb40d7a0088cbea862962c.jpg",
-      "description": "đẹp"
+      "id": "pg01",
+      "name": "PG Unleashed RX-78-2 Gundam",
+      "price": 5000000,
+      "image": "https://product.hstatic.net/200000326537/product/pg-unleashed-rx-78-2-gundam-8_3135f704668d41e0aa7a9ecf7876ff1f_grande.jpg",
+      "category": "Perfect Grade (PG)",
+      "description": "Perfect Grade Unleashed RX-78-2 – kiệt tác Gundam tỉ lệ 1/60 với cơ chế LED, chi tiết cực cao và khả năng tạo dáng đỉnh cao.",
+      "quantity": 2
+    },
+    {
+      "id": "hg02",
+      "name": "HG Barbatos Lupus Rex",
+      "price": 420000,
+      "image": "https://bizweb.dktcdn.net/100/524/018/products/f700a857-3b9d-4d7a-8c4b-924fab8c626f-jpeg-1732644359328.jpg?v=1732644368537",
+      "category": "High Grade (HG)",
+      "description": "HG Barbatos Lupus Rex đến từ Iron-Blooded Orphans – tạo hình mạnh mẽ, vũ khí đuôi đặc trưng, cực kỳ nổi bật.",
+      "quantity": 8
+    },
+    {
+      "name": "Wing Gundam Zero EW",
+      "price": 1000000,
+      "image": "https://m.media-amazon.com/images/I/71muGqdVxnL._AC_SL1421_.jpg",
+      "category": "Real Grade (RG)",
+      "description": "Wing Gundam Zero EW là phiên bản nâng cấp và hoàn thiện của Wing Gundam Zero, xuất hiện trong OVA Mobile Suit Gundam Wing: Endless Waltz. Thiết kế được thực hiện bởi Hajime Katoki, với phong cách mềm mại, tinh tế và mang nét \"thiên thần\" đặc trưng – nổi bật nhất là đôi cánh trắng khổng lồ tượng trưng cho tự do và tái sinh.",
+      "quantity": 1,
+      "id": "410c"
+    },
+    {
+      "id": "e559",
+      "name": "Mô hình MG Sky Defender EINTA-INDUSTRIES 1/72",
+      "price": 2600000,
+      "category": "Master Grade (MG)",
+      "quantity": 5,
+      "image": "https://fuwafuwaland.ca/cdn/shop/files/rn-image_picker_lib_temp_58a9e4e3-a5f1-4c02-836c-71340e7143ab.png?v=1753109415",
+      "description": "Sky Defender là mẫu mecha tấn công – phòng thủ thế hệ mới do EINTA INDUSTRIES phát triển, mang phong cách tương lai với giáp góc cạnh, đôi cánh phản lực lớn và khả năng chiến đấu linh hoạt trên không.\nMô hình tỉ lệ 1/72, thiết kế chi tiết cao, khớp nối linh hoạt, hiệu ứng bay ấn tượng. Bộ kit nổi bật với vũ khí năng lượng kép, khiên phòng thủ, đôi cánh cơ động, cùng màu sơn chủ đạo trắng – xanh – xám kim loại tạo cảm giác mạnh mẽ, hiện đ"
     }
   ],
   "categories": [
     {
-      "name": "Áo",
-      "description": "123456",
-      "id": "4d2f"
+      "id": "cat1",
+      "name": "High Grade (HG)",
+      "description": "Dòng mô hình 1/144 phổ biến, dễ lắp ráp, giá tốt cho người mới bắt đầu."
     },
     {
-      "name": "Quần",
-      "description": "457688",
-      "id": "257c"
+      "id": "cat2",
+      "name": "Real Grade (RG)",
+      "description": "Dòng mô hình 1/144 chi tiết cao, khớp linh hoạt và thiết kế phức tạp."
     },
     {
-      "id": "5c0e",
-      "name": "Áo khoác",
-      "description": "đẹp"
+      "id": "cat3",
+      "name": "Master Grade (MG)",
+      "description": "Dòng mô hình 1/100 dành cho người chơi chuyên sâu, cấu trúc khung xương hoàn chỉnh."
+    },
+    {
+      "id": "cat4",
+      "name": "Perfect Grade (PG)",
+      "description": "Dòng mô hình 1/60 cao cấp nhất, chi tiết và kích thước cực lớn."
     }
   ],
   "users": [
@@ -61,9 +93,9 @@
       "role": "user"
     },
     {
-      "id": "0db6",
+      "id": "09c1",
       "name": "Toàn",
-      "username": "vtoan17",
+      "username": "toan17",
       "password": "170906",
       "role": "user"
     }
@@ -71,16 +103,16 @@
   "comments": [
     {
       "id": "1",
-      "text": "a comment about product 1",
+      "text": "Mô hình rất chi tiết, dễ lắp ráp.",
       "productId": null
     },
     {
       "id": "2",
-      "text": "another comment about product 1",
-      "productId": null
+      "text": "Đóng gói cẩn thận, giao hàng nhanh.",
+      "productId": "rg01"
     }
   ],
   "profile": {
-    "name": "typicode"
+    "name": "Gunpla Store Vietnam"
   }
 }

@@ -11,29 +11,31 @@ const isSuccess = ref(false)
 const categories = ref([])
 
 const product = reactive({
-  title: '',
+  name: '',
   price: '',
   image: '',
   category: '',
   description: '',
   quantity: 1
 })
+
 onMounted(async () => {
   const id = route.params.id
   const resProduct = await axios.get(`http://localhost:3000/products/${id}`)
   Object.assign(product, resProduct.data)
+
   const resCat = await axios.get('http://localhost:3000/categories')
   if (resCat.status === 200) categories.value = resCat.data
 })
 
 const handleUpdate = async () => {
-  const id = route.params.id
-  if (!product.title.trim()) {
+  if (!product.name.trim()) {
     message.value = 'Tên sản phẩm không được để trống!'
     isSuccess.value = false
     return
   }
 
+  const id = route.params.id
   const response = await axios.put(`http://localhost:3000/products/${id}`, { ...product })
   if (response.status === 200) {
     message.value = 'Cập nhật sản phẩm thành công!'
@@ -44,15 +46,13 @@ const handleUpdate = async () => {
     isSuccess.value = false
   }
 }
-
-const goTo = (path) => router.push(path)
 </script>
 
 <template>
   <div class="container my-5 d-flex justify-content-center">
     <div class="card shadow-lg border-0 rounded-4 p-4" style="max-width: 550px; width: 100%;">
-      <h3 class="text-center fw-bold text-primary mb-3">Sửa sản phẩm</h3>
-      <p class="text-center text-muted mb-4">Điền thông tin cần chỉnh sửa cho sản phẩm bên dưới</p>
+      <h3 class="text-center fw-bold text-primary mb-3">Sửa thông tin Gundam</h3>
+      <p class="text-center text-muted mb-4">Cập nhật thông tin mô hình bên dưới</p>
 
       <transition name="fade">
         <div
@@ -66,8 +66,8 @@ const goTo = (path) => router.push(path)
 
       <form @submit.prevent="handleUpdate">
         <div class="mb-3">
-          <label class="form-label fw-semibold">Tên sản phẩm <span class="text-danger">*</span></label>
-          <input v-model="product.title" type="text" class="form-control" placeholder="Nhập tên sản phẩm..." />
+          <label class="form-label fw-semibold">Tên mô hình <span class="text-danger">*</span></label>
+          <input v-model="product.name" type="text" class="form-control" placeholder="Nhập tên Gundam..." />
         </div>
 
         <div class="mb-3">
@@ -102,17 +102,12 @@ const goTo = (path) => router.push(path)
 
         <div class="mb-3">
           <label class="form-label fw-semibold">Mô tả</label>
-          <textarea
-            v-model="product.description"
-            class="form-control"
-            rows="3"
-            placeholder="Nhập mô tả sản phẩm..."
-          ></textarea>
+          <textarea v-model="product.description" class="form-control" rows="3" placeholder="Mô tả Gundam..."></textarea>
         </div>
 
         <div class="d-flex justify-content-between align-items-center">
           <button type="submit" class="btn btn-primary px-4 fw-semibold">Lưu thay đổi</button>
-          <button type="button" @click="goTo('/admin/products')" class="btn btn-outline-secondary px-4">
+          <button type="button" @click="router.push('/admin/products')" class="btn btn-outline-secondary px-4">
             ← Quay lại
           </button>
         </div>
@@ -122,16 +117,13 @@ const goTo = (path) => router.push(path)
 </template>
 
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
+.fade-enter-active, .fade-leave-active {
   transition: opacity 0.4s ease;
 }
-.fade-enter-from,
-.fade-leave-to {
+.fade-enter-from, .fade-leave-to {
   opacity: 0;
 }
-.form-control:focus,
-.form-select:focus {
+.form-control:focus, .form-select:focus {
   border-color: #0d6efd;
   box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
 }

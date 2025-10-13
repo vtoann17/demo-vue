@@ -7,10 +7,9 @@ const router = useRouter()
 const message = ref('')
 const isSuccess = ref(false)
 const categories = ref([])
-const goTo = (path) => router.push(path)
 
 const product = reactive({
-  title: '',
+  name: '',
   price: '',
   category: '',
   quantity: 1,
@@ -18,28 +17,23 @@ const product = reactive({
   description: ''
 })
 
-
 onMounted(async () => {
-  const response = await axios.get('http://localhost:3000/categories')
-  if (response.status === 200) {
-    categories.value = response.data
-  }
+  const res = await axios.get('http://localhost:3000/categories')
+  if (res.status === 200) categories.value = res.data
 })
 
 const handleSubmit = async () => {
-  if (!product.title.trim()) {
+  if (!product.name.trim()) {
     message.value = 'Tên sản phẩm không được để trống!'
     isSuccess.value = false
     return
   }
 
-  const payload = { ...product }
-
-  const response = await axios.post('http://localhost:3000/products', payload)
+  const response = await axios.post('http://localhost:3000/products', { ...product })
   if (response.status === 201) {
     message.value = 'Đã thêm sản phẩm thành công!'
     isSuccess.value = true
-    clearData()
+    clearForm()
     setTimeout(() => router.push('/admin/products'), 1500)
   } else {
     message.value = 'Có lỗi khi thêm sản phẩm!'
@@ -47,9 +41,9 @@ const handleSubmit = async () => {
   }
 }
 
-const clearData = () => {
+const clearForm = () => {
   Object.assign(product, {
-    title: '',
+    name: '',
     price: '',
     category: '',
     quantity: 1,
@@ -62,8 +56,8 @@ const clearData = () => {
 <template>
   <div class="container my-5 d-flex justify-content-center">
     <div class="card shadow-lg border-0 rounded-4 p-4" style="max-width: 550px; width: 100%;">
-      <h3 class="text-center fw-bold text-primary mb-3">🛒 Thêm sản phẩm mới</h3>
-      <p class="text-center text-muted mb-4">Nhập thông tin sản phẩm để thêm vào danh sách</p>
+      <h3 class="text-center fw-bold text-primary mb-3">Thêm mô hình Gundam mới</h3>
+      <p class="text-center text-muted mb-4">Nhập thông tin mô hình Gundam để thêm vào danh sách</p>
 
       <transition name="fade">
         <div
@@ -77,13 +71,15 @@ const clearData = () => {
 
       <form @submit.prevent="handleSubmit">
         <div class="mb-3">
-          <label class="form-label fw-semibold">Tên sản phẩm <span class="text-danger">*</span></label>
-          <input v-model="product.title" type="text" class="form-control" placeholder="Nhập tên sản phẩm..." />
+          <label class="form-label fw-semibold">Tên mô hình <span class="text-danger">*</span></label>
+          <input v-model="product.name" type="text" class="form-control" placeholder="Nhập tên Gundam..." />
         </div>
+
         <div class="mb-3">
           <label class="form-label fw-semibold">Giá (VNĐ)</label>
           <input v-model="product.price" type="number" class="form-control" placeholder="Nhập giá..." />
         </div>
+
         <div class="mb-3">
           <label class="form-label fw-semibold">Danh mục</label>
           <select v-model="product.category" class="form-select">
@@ -91,18 +87,15 @@ const clearData = () => {
             <option v-for="cat in categories" :key="cat.id" :value="cat.name">{{ cat.name }}</option>
           </select>
         </div>
+
         <div class="mb-3">
           <label class="form-label fw-semibold">Số lượng tồn kho</label>
           <input v-model="product.quantity" type="number" min="0" class="form-control" placeholder="Nhập số lượng..." />
         </div>
+
         <div class="mb-3">
           <label class="form-label fw-semibold">Hình ảnh (URL)</label>
-          <input
-            v-model="product.image"
-            type="text"
-            class="form-control"
-            placeholder="Dán link hình ảnh sản phẩm..."
-          />
+          <input v-model="product.image" type="text" class="form-control" placeholder="Dán link hình ảnh Gundam..." />
           <div v-if="product.image" class="mt-3 text-center">
             <img
               :src="product.image"
@@ -112,18 +105,15 @@ const clearData = () => {
             />
           </div>
         </div>
+
         <div class="mb-3">
           <label class="form-label fw-semibold">Mô tả</label>
-          <textarea
-            v-model="product.description"
-            class="form-control"
-            rows="3"
-            placeholder="Nhập mô tả ngắn về sản phẩm..."
-          ></textarea>
+          <textarea v-model="product.description" class="form-control" rows="3" placeholder="Mô tả ngắn..."></textarea>
         </div>
+
         <div class="d-flex justify-content-between align-items-center">
           <button type="submit" class="btn btn-primary px-4 fw-semibold">Lưu sản phẩm</button>
-          <button @click="goTo('/admin/products')" type="button" class="btn btn-outline-secondary px-4">
+          <button @click="router.push('/admin/products')" type="button" class="btn btn-outline-secondary px-4">
             ← Quay lại
           </button>
         </div>
@@ -133,16 +123,13 @@ const clearData = () => {
 </template>
 
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
+.fade-enter-active, .fade-leave-active {
   transition: opacity 0.4s ease;
 }
-.fade-enter-from,
-.fade-leave-to {
+.fade-enter-from, .fade-leave-to {
   opacity: 0;
 }
-.form-control:focus,
-.form-select:focus {
+.form-control:focus, .form-select:focus {
   border-color: #0d6efd;
   box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
 }

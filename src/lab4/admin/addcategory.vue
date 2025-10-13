@@ -7,7 +7,7 @@ const router = useRouter()
 const message = ref('')
 const isSuccess = ref(false)
 
-const category = reactive({
+const gundamLine = reactive({
   name: '',
   description: ''
 })
@@ -15,33 +15,33 @@ const category = reactive({
 const goTo = (path) => router.push(path)
 
 const handleSubmit = async () => {
-  if (!category.name.trim()) {
-    message.value = 'Tên danh mục không được để trống!'
+  if (!gundamLine.name.trim()) {
+    message.value = 'Tên dòng Gundam không được để trống!'
     isSuccess.value = false
     return
   }
-  const response = await axios.post('http://localhost:3000/categories', { ...category })
+  const response = await axios.post('http://localhost:3000/categories', { ...gundamLine })
   if (response.status === 201) {
-    message.value = 'Thêm danh mục thành công!'
+    message.value = 'Thêm dòng Gundam thành công!'
     isSuccess.value = true
     clearData()
     setTimeout(() => router.push('/admin/categories'), 1500)
   } else {
-    message.value = 'Có lỗi khi thêm danh mục!'
+    message.value = 'Có lỗi khi thêm dòng Gundam!'
     isSuccess.value = false
   }
 }
 
 const clearData = () => {
-  Object.assign(category, { name: '', description: '' })
+  Object.assign(gundamLine, { name: '', description: '' })
 }
 </script>
 
 <template>
   <div class="container my-5 d-flex justify-content-center">
     <div class="card shadow-lg border-0 rounded-4 p-4" style="max-width: 500px; width: 100%;">
-      <h3 class="text-center fw-bold text-success mb-3">🗂️ Thêm danh mục mới</h3>
-      <p class="text-center text-muted mb-4">Nhập thông tin để tạo danh mục mới</p>
+      <h3 class="text-center fw-bold text-primary mb-3">🤖 Thêm dòng Gundam mới</h3>
+      <p class="text-center text-muted mb-4">Nhập thông tin để tạo dòng Gundam mới</p>
 
       <transition name="fade">
         <div
@@ -55,27 +55,27 @@ const clearData = () => {
 
       <form @submit.prevent="handleSubmit">
         <div class="mb-3">
-          <label class="form-label fw-semibold">Tên danh mục <span class="text-danger">*</span></label>
+          <label class="form-label fw-semibold">Tên dòng Gundam <span class="text-danger">*</span></label>
           <input
-            v-model="category.name"
+            v-model="gundamLine.name"
             type="text"
             class="form-control"
-            placeholder="Nhập tên danh mục..."
+            placeholder="Ví dụ: High Grade, Master Grade..."
           />
         </div>
 
         <div class="mb-3">
           <label class="form-label fw-semibold">Mô tả</label>
           <textarea
-            v-model="category.description"
+            v-model="gundamLine.description"
             class="form-control"
             rows="3"
-            placeholder="Nhập mô tả ngắn..."
+            placeholder="Nhập mô tả ngắn về dòng Gundam..."
           ></textarea>
         </div>
 
         <div class="d-flex justify-content-between align-items-center">
-          <button type="submit" class="btn btn-success px-4 fw-semibold">Lưu danh mục</button>
+          <button type="submit" class="btn btn-primary px-4 fw-semibold">Lưu dòng Gundam</button>
           <button @click="goTo('/admin/categories')" type="button" class="btn btn-outline-secondary px-4">
             ← Quay lại
           </button>
@@ -90,14 +90,12 @@ const clearData = () => {
 .fade-leave-active {
   transition: opacity 0.4s ease;
 }
-
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
 }
-
 .form-control:focus {
-  border-color: #198754;
-  box-shadow: 0 0 0 0.15rem rgba(25, 135, 84, 0.25);
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
 }
 </style>

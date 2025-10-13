@@ -5,7 +5,6 @@ import ThongBao from "./thongbao.vue";
 import TrangThai from "./trangthai.vue";
 import Products from "./components/Products.vue";
 import Login from "./components/Login.vue";
-import ListPost from "./pages/Listpost.vue";
 import Modal from "./components/Modal.vue";
 import ChildComponent from "./components/ChildComponent.vue";
 import BaseLayout from "./components/BaseLayout.vue";

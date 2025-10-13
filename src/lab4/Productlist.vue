@@ -2,36 +2,52 @@
 import { ref, computed, onMounted } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
-console.log(API_URL)
+import { useStore } from 'vuex'
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000"
 
 const router = useRouter()
+const store = useStore()
 const currentUser = ref(null)
 const products = ref([])
+const categories = ref([])
 const searchQuery = ref('')
 const sortOption = ref('default')
+const selectedCategory = ref('all')
 
 const goTo = (path) => router.push(path)
 
 onMounted(async () => {
-  await Loadulieu()
+  await loadData()
+  await loadCategories()
   const savedUser = localStorage.getItem('currentUser')
   if (savedUser) currentUser.value = JSON.parse(savedUser)
 })
 
-const Loadulieu = async () => {
+const loadData = async () => {
   const response = await axios.get(`${API_URL}/products`)
   if (response.status === 200) products.value = response.data
 }
 
+const loadCategories = async () => {
+  const res = await axios.get(`${API_URL}/categories`)
+  if (res.status === 200) categories.value = res.data
+}
+
+
 const filteredProducts = computed(() => {
   let result = products.value
+
+
+  if (selectedCategory.value !== 'all') {
+    result = result.filter(p => p.category === selectedCategory.value)
+  }
 
   if (searchQuery.value.trim() !== '') {
     const q = searchQuery.value.toLowerCase()
     result = result.filter(
       (p) =>
-        p.title.toLowerCase().includes(q) ||
+        p.name.toLowerCase().includes(q) ||
         p.description.toLowerCase().includes(q)
     )
   }
@@ -41,20 +57,38 @@ const filteredProducts = computed(() => {
   } else if (sortOption.value === 'price-desc') {
     result = [...result].sort((a, b) => Number(b.price) - Number(a.price))
   } else if (sortOption.value === 'name-asc') {
-    result = [...result].sort((a, b) => a.title.localeCompare(b.title))
+    result = [...result].sort((a, b) => a.name.localeCompare(b.name))
   } else if (sortOption.value === 'name-desc') {
-    result = [...result].sort((a, b) => b.title.localeCompare(a.title))
+    result = [...result].sort((a, b) => b.name.localeCompare(a.name))
   }
 
   return result
 })
+
+const selectCategory = (catName) => {
+  selectedCategory.value = catName
+}
+
+const cartCount = computed(() => store.getters['cart/cartCount'])
 </script>
 
+
+
 <template>
-  <header class="py-3 bg-white border-bottom shadow-sm sticky-top">
-    <div class="container d-flex justify-content-between align-items-center">
+  <header class="main-header">
+    <div class="header-inner d-flex justify-content-between align-items-center">
       <h3 class="fw-bold text-primary mb-0">Cửa hàng</h3>
+      <nav class="d-flex align-items-center gap-4">
+        <router-link to="/" class="nav-link fw-semibold text-dark">Trang chủ</router-link>
+        <router-link to="/productlist" class="nav-link fw-semibold text-dark">Sản phẩm</router-link>
+      </nav>
       <nav class="d-flex align-items-center gap-3">
+        <button class="cart-btn position-relative btn btn-outline-success btn-sm" @click="goTo('/cart')">
+          Giỏ hàng
+          <span class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-pill">
+            {{ cartCount }}
+          </span>
+        </button>
         <button v-if="!currentUser" class="btn btn-sm btn-outline-primary" @click="goTo('/login')">
           Đăng nhập
         </button>
@@ -65,101 +99,186 @@ const filteredProducts = computed(() => {
           </button>
           <ul class="dropdown-menu dropdown-menu-end shadow-sm">
             <li v-if="currentUser.role === 'admin'">
-              <router-link class="dropdown-item" to="/admin">Trang quản lý</router-link>
+              <router-link class="dropdown-item" to="/admin/products">Trang quản lý</router-link>
             </li>
             <li v-if="currentUser.role === 'user'">
               <router-link class="dropdown-item" to="/profile">Hồ sơ</router-link>
             </li>
-            <li><hr class="dropdown-divider" /></li>
             <li>
-              <router-link class="dropdown-item text-danger" to="/logout">Đăng xuất</router-link>
+              <hr class="dropdown-divider" />
             </li>
+            <li><router-link class="dropdown-item text-danger" to="/logout">Đăng xuất</router-link></li>
           </ul>
         </div>
       </nav>
     </div>
   </header>
-  <div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
-      <div>
-        <h2 class="fw-bold text-dark mb-0">Danh sách sản phẩm</h2>
-        <p class="text-muted mb-0">
-          Tổng cộng: <strong>{{ filteredProducts.length }}</strong> sản phẩm
-        </p>
-      </div>
 
-      <div class="d-flex gap-2 flex-wrap">
-        <input
-          v-model="searchQuery"
-          type="text"
-          class="form-control form-control-sm"
-          placeholder="Tìm kiếm sản phẩm..."
-          style="width:200px;"
-        />
-        <select v-model="sortOption" class="form-select form-select-sm" style="width:180px;">
-          <option value="default">Sắp xếp mặc định</option>
-          <option value="price-asc">Giá: Thấp đến cao</option>
-          <option value="price-desc">Giá: Cao đến thấp</option>
-          <option value="name-asc">Tên: A → Z</option>
-          <option value="name-desc">Tên: Z → A</option>
-        </select>
-      </div>
-    </div>
-
+  <div class="container-fluid mt-5 px-4 product-page">
     <div class="row g-4">
-      <div v-for="p in filteredProducts" :key="p.id" class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <div class="card h-100 shadow-sm product-card border-0 rounded-4 overflow-hidden">
-          <div class="position-relative">
-            <img :src="p.image" class="card-img-top" alt="Product" style="height:240px; object-fit:cover;" />
-            <span
-              class="position-absolute top-0 end-0 bg-danger text-white px-2 py-1 small rounded-start"
-              v-if="Number(p.price) > 1000000"
-            >
-              HOT
-            </span>
-          </div>
+      <aside class="col-lg-3 mb-4">
+        <div class="sidebar bg-white shadow-sm rounded-3 p-3">
+          <h5 class="fw-bold mb-3 text-uppercase">Danh mục sản phẩm</h5>
+          <ul class="list-unstyled mb-4">
+            <li class="py-2 border-bottom">
+              <a href="#" class="text-decoration-none fw-semibold"
+                :class="selectedCategory === 'all' ? 'text-primary' : 'text-dark'"
+                @click.prevent="selectCategory('all')">
+                Tất cả sản phẩm
+              </a>
+            </li>
 
-          <div class="card-body p-3">
-            <h5 class="card-title fw-semibold text-truncate mb-2">{{ p.title }}</h5>
-            <p class="text-muted small mb-2 text-truncate">{{ p.description }}</p>
-            <h5 class="text-danger mb-3">
-              {{ Number(p.price).toLocaleString('vi-VN') }}₫
-            </h5>
-            <span class="badge bg-secondary">{{ p.category }}</span>
-          </div>
+            <li v-for="cat in categories" :key="cat.id" class="py-2 border-bottom">
+              <a href="#" class="text-decoration-none"
+                :class="selectedCategory === cat.name ? 'text-primary fw-semibold' : 'text-dark'"
+                @click.prevent="selectCategory(cat.name)">
+                {{ cat.name }}
+              </a>
+            </li>
 
-          <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
-            <router-link :to="`/products/${p.id}`" class="btn btn-sm btn-outline-primary px-3">
-              Xem chi tiết
-            </router-link>
-            <button class="btn btn-sm btn-success px-3">Mua ngay</button>
+            <li v-if="categories.length === 0" class="text-muted text-center py-3">
+              Đang tải danh mục...
+            </li>
+          </ul>
+
+
+        </div>
+      </aside>
+      <section class="col-lg-9">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2 sort-bar">
+          <div class="d-flex align-items-center gap-3">
+
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <p class="text-muted mb-0 small">
+              Tổng <strong>{{ filteredProducts.length }}</strong> sản phẩm
+            </p>
+            <label class="text-muted small mb-0">Sắp xếp:</label>
+            <select v-model="sortOption" class="form-select form-select-sm" style="width:180px;">
+              <option value="default">Mặc định</option>
+              <option value="price-asc">Giá: Thấp → Cao</option>
+              <option value="price-desc">Giá: Cao → Thấp</option>
+              <option value="name-asc">Tên: A → Z</option>
+              <option value="name-desc">Tên: Z → A</option>
+            </select>
           </div>
         </div>
-      </div>
 
-      <div v-if="filteredProducts.length === 0" class="text-center text-muted py-5">
-        <div class="spinner-border text-primary mb-3" role="status"></div>
-        <p>Không tìm thấy sản phẩm phù hợp...</p>
-      </div>
+        <div class="row g-4">
+          <div v-for="p in filteredProducts" :key="p.id" class="col-12 col-sm-6 col-md-4">
+            <div class="card h-100 border-0 shadow-sm product-card rounded-3 overflow-hidden">
+              <div class="position-relative">
+                <img :src="p.image" class="card-img-top" alt="Product" style="height:250px; object-fit:cover;">
+                <span v-if="Number(p.price) > 1000000" class="badge bg-danger position-absolute top-0 start-0 m-2">
+                  HOT
+                </span>
+              </div>
+              <div class="card-body">
+                <h6 class="fw-bold text-truncate">{{ p.name }}</h6>
+                <p class="text-muted small text-truncate mb-2">{{ p.description }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="fw-semibold text-danger">{{ Number(p.price || 0).toLocaleString('vi-VN') }}₫</span>
+                  <router-link :to="`/products/${p.id}`" class="btn btn-outline-primary btn-sm">Xem nhanh</router-link>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div v-if="filteredProducts.length === 0" class="text-center text-muted py-5">
+            <div class="spinner-border text-primary mb-3" role="status"></div>
+            <p>Không tìm thấy sản phẩm phù hợp...</p>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
 </template>
 
+
+
 <style scoped>
+.main-header {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 40px;
+  width: 100%;
+}
+
+
+.container-fluid {
+  margin-top: 90px;
+}
+
+.row {
+  align-items: flex-start;
+}
+
+.sidebar {
+  position: sticky;
+  top: 100px;
+}
+
+.sidebar ul li a:hover {
+  color: #0d6efd;
+  transition: 0.2s;
+}
+
+.sort-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px !important;
+  padding-bottom: 10px !important;
+}
+
+.mt-5 {
+  margin-top: 100px !important;
+}
+
 .product-card {
   transition: all 0.3s ease;
 }
+
 .product-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
-.card-title {
-  font-size: 1.05rem;
+
+.cart-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
-.card-footer {
-  transition: background 0.2s ease;
+
+.cart-btn:hover {
+  background-color: #0d6efd;
+  /* Bootstrap success */
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(25, 135, 84, 0.3);
 }
-.card-footer:hover {
-  background-color: #f8f9fa;
+
+.cart-btn .badge {
+  font-size: 0.7rem;
+  padding: 4px 6px;
 }
 </style>

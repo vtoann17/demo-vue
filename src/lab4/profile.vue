@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const activeMenu = ref('profile')
 
 const message = ref('')
 const isSuccess = ref(false)
@@ -26,8 +27,8 @@ onMounted(async () => {
     return
   }
 
-  const response = await axios.get(`http://localhost:3000/users/${userId}`)
-  if (response.status === 200) {
+  const res = await axios.get(`http://localhost:3000/users/${userId}`)
+  if (res.status === 200) {
     Object.assign(user, res.data)
     preview.value = user.avatar || ''
   }
@@ -63,29 +64,28 @@ const handleUpdate = async () => {
   }
 }
 
-const goTo = (path) => router.push(path)
+const handleLogout = () => {
+  localStorage.removeItem('currentUser')
+  router.push('/login')
+}
 </script>
 
 <template>
-  <div class="d-flex" style="min-height: 100vh; background-color: #f8f9fa;">
-   <div class="d-flex" style="min-height: 100vh;">
-    <div class="bg-dark text-white p-3" style="width: 250px;">
-      <h4 class="mb-4">Hồ sơ</h4>
-      <ul class="nav flex-column gap-2">
-        <li class="nav-item">
-          <button class="btn btn-dark w-100 text-start" @click="goTo('/productlist')">Trang chủ
-          </button>
-        </li>
+  <div class="user-panel">
+    <div class="sidebar">
+      <h4 class="text-white text-center mb-4">Menu người dùng</h4>
+      <ul class="menu">
+        <li @click="goTo('/')"><i class="bi bi-house-door"></i> Trang chủ</li>
+        <li :class="{ active: activeMenu === 'profile' }" @click="activeMenu = 'profile'">Thông tin cá nhân</li>
+        <li :class="{ active: activeMenu === 'wishlist' }" @click="activeMenu = 'wishlist'">Sản phẩm mong muốn</li>
+        <li class="logout" @click="handleLogout">Đăng xuất</li>
       </ul>
     </div>
-    <div class="flex-grow-1 p-4">
-      <router-view />
-    </div>
-  </div>
-    <div class="flex-grow-1 p-4">
-      <div class="card shadow-lg border-0 rounded-4 p-4 mx-auto" style="max-width: 600px;">
+    <div class="content p-4">
+      <div v-if="activeMenu === 'profile'" class="card shadow border-0 rounded-4 p-4">
         <h3 class="text-center fw-bold text-primary mb-3">Hồ sơ người dùng</h3>
         <p class="text-center text-muted mb-4">Xem và chỉnh sửa thông tin tài khoản của bạn</p>
+
         <transition name="fade">
           <div
             v-if="message"
@@ -95,6 +95,7 @@ const goTo = (path) => router.push(path)
             {{ message }}
           </div>
         </transition>
+
         <form @submit.prevent="handleUpdate">
           <div class="text-center mb-3">
             <img
@@ -134,14 +135,75 @@ const goTo = (path) => router.push(path)
           </div>
         </form>
       </div>
+      <div v-else-if="activeMenu === 'wishlist'" class="card shadow border-0 rounded-4 p-4">
+        <h3 class="text-center fw-bold text-primary mb-3">Sản phẩm mong muốn</h3>
+        <p class="text-center text-muted mb-3">Hiển thị danh sách các sản phẩm bạn yêu thích</p>
+        <p class="text-center text-secondary">💖 Tính năng này đang được phát triển 💖</p>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.user-panel {
+  display: flex;
+  height: 100vh;
+  background-color: #f8f9fa;
+  margin: 0;
+}
+
 .sidebar {
   width: 240px;
-  border-right: 1px solid #ddd;
+  background: linear-gradient(180deg, #007bff, #0056d2);
+  color: white;
+  padding: 20px 10px 20px 0; /* giảm padding trái để sát mép */
+  margin: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  position: fixed; /* giữ cố định bên trái */
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.sidebar .menu {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.sidebar .menu li {
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.sidebar .menu li:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar .menu li.active {
+  background: white;
+  color: #007bff;
+  font-weight: 600;
+}
+
+.sidebar .menu li.logout {
+  margin-top: 20px;
+  background: #dc3545;
+  text-align: center;
+}
+
+.sidebar .menu li.logout:hover {
+  background: #c82333;
+}
+
+.content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 30px;
+  margin-left: 240px; /* chừa chỗ cho sidebar cố định */
 }
 
 .fade-enter-active,
@@ -153,8 +215,4 @@ const goTo = (path) => router.push(path)
   opacity: 0;
 }
 
-.form-control:focus {
-  border-color: #0d6efd;
-  box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
-}
 </style>

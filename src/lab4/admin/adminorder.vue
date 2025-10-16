@@ -118,18 +118,14 @@ const filteredOrders = computed(() => {
                     {{ Number(item.grand_total || item.total).toLocaleString('vi-VN') }}₫
                   </td>
                   <td>
-                    <select
-                      v-model="item.status"
-                      @change="updateStatus(item)"
-                      class="form-select form-select-sm text-center fw-semibold"
-                      :class="{
+                    <select v-model="item.status" @change="updateStatus(item)"
+                      class="form-select form-select-sm text-center fw-semibold" :class="{
                         'text-secondary': item.status === 'Chờ xác nhận',
                         'text-primary': item.status === 'Đã xác nhận',
                         'text-info': item.status === 'Đang giao hàng',
                         'text-success': item.status === 'Hoàn tất',
                         'text-danger': item.status === 'Đã hủy'
-                      }"
-                    >
+                      }">
                       <option>Chờ xác nhận</option>
                       <option>Đã xác nhận</option>
                       <option>Đang giao hàng</option>
@@ -139,16 +135,10 @@ const filteredOrders = computed(() => {
                   </td>
                   <td>{{ new Date(item.createdAt).toLocaleDateString('vi-VN') }}</td>
                   <td>
-                    <button
-                      class="btn btn-sm btn-outline-primary me-2"
-                      @click="goTo(`/admin/orders/${item.id}`)"
-                    >
+                    <button class="btn btn-sm btn-outline-primary me-2" @click="goTo(`/admin/orders/${item.id}`)">
                       Xem
                     </button>
-                    <button
-                      class="btn btn-sm btn-outline-danger"
-                      @click="handleDelete(item.id)"
-                    >
+                    <button class="btn btn-sm btn-outline-danger" @click="handleDelete(item.id)">
                       Xóa
                     </button>
                   </td>
@@ -190,6 +180,7 @@ const filteredOrders = computed(() => {
   bottom: 0;
   left: 0;
 }
+
 .sidebar .logo {
   font-size: 22px;
   text-align: center;
@@ -197,11 +188,13 @@ const filteredOrders = computed(() => {
   margin-bottom: 25px;
   letter-spacing: 1px;
 }
+
 .sidebar ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
+
 .sidebar li {
   padding: 12px 25px;
   cursor: pointer;
@@ -210,11 +203,13 @@ const filteredOrders = computed(() => {
   align-items: center;
   gap: 10px;
 }
+
 .sidebar li:hover,
 .sidebar li.active {
   background: rgba(255, 255, 255, 0.2);
   border-left: 4px solid #fff;
 }
+
 .sidebar i {
   font-size: 18px;
 }
@@ -233,6 +228,7 @@ const filteredOrders = computed(() => {
   font-weight: 600;
   font-size: 15px;
 }
+
 .table tbody tr:hover {
   background-color: #f6faff;
   transition: 0.2s;
@@ -243,6 +239,7 @@ const filteredOrders = computed(() => {
 .fade-leave-active {
   transition: opacity 0.3s ease;
 }
+
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;

@@ -7,20 +7,25 @@ import { useStore } from 'vuex'
 const store = useStore()
 const router = useRouter()
 const goTo = (path) => router.push(path)
+
 const API_KEY = "2068e364-a962-11f0-8a8c-d60461a34742"
 const idShop = 6063478
-const provinces = ref()
+
+const provinces = ref([])
 const province_id = ref("")
-const districts = ref()
+const districts = ref([])
 const district_id = ref("")
-const wards = ref()
+const wards = ref([])
 const wards_id = ref("")
-const tinhPhi = ref()
+const tinhPhi = ref(null)
 const name = ref('')
 const phone = ref('')
 const address = ref('')
 const note = ref('')
 const paymentMethod = ref('')
+const message = ref('')
+const messageType = ref('')
+
 const tinhPhiShip = async () => {
   const res = await axios.get(`https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee`, {
     headers: {
@@ -29,76 +34,73 @@ const tinhPhiShip = async () => {
       'ShopID': idShop
     },
     params: {
-      'service_type_id': 2,
-      'to_district_id': parseInt(district_id.value),
-      'to_ward_code': wards_id.value,
-      "length": 30,
-      "width": 40,
-      "height": 20,
-      "weight": 3000,
-      "insurance_value": 0,
-      "coupon": null,
+      service_type_id: 2,
+      to_district_id: parseInt(district_id.value),
+      to_ward_code: wards_id.value,
+      length: 30,
+      width: 40,
+      height: 20,
+      weight: 3000,
+      insurance_value: 0,
+      coupon: null,
     }
   })
   tinhPhi.value = res.data.data
-
 }
 
 const loadProvince = async () => {
-  const response = await axios.get(`https://online-gateway.ghn.vn/shiip/public-api/master-data/province`, {
-    headers: {
-      'Content-Type': 'application/json',
-      'Token': API_KEY
-    }
+  const res = await axios.get(`https://online-gateway.ghn.vn/shiip/public-api/master-data/province`, {
+    headers: { 'Token': API_KEY,
+      'Content-Type': 'application/json'
+     }
   })
-  provinces.value = response.data.data
+  provinces.value = res.data.data
 }
+
 const loadDistrict = async () => {
-  const response = await axios.get(`https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${province_id.value}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      'Token': API_KEY
-    },
-  })
-  districts.value = response.data.data
+  const res = await axios.get(
+    `https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${province_id.value}`,
+    { headers: { 'Token': API_KEY,
+      'Content-Type': 'application/json'
+     } }
+  )
+  districts.value = res.data.data
 }
+
 const loadWard = async () => {
-  const response = await axios.get(`https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${district_id.value}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      'Token': API_KEY
-    },
-  })
-  wards.value = response.data.data
+  const res = await axios.get(
+    `https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${district_id.value}`,
+    { headers: { 'Token': API_KEY,
+      'Content-Type': 'application/json'
+     } }
+  )
+  wards.value = res.data.data
 }
-
-
 
 const cartItems = computed(() => store.getters['cart/cartItems'])
 const cartTotal = computed(() => store.getters['cart/cartTotal'])
 const cartCount = computed(() => store.getters['cart/cartCount'])
+const tongThanhToan = computed(() => {
+  if (!tinhPhi.value) return cartTotal.value
+  return cartTotal.value + tinhPhi.value.total
+})
 
 const currentUser = ref(null)
 onMounted(() => {
   const savedUser = localStorage.getItem('currentUser')
   if (savedUser) currentUser.value = JSON.parse(savedUser)
   loadProvince()
-
 })
 
 const remove = (id) => store.dispatch('cart/removeFromCart', id)
-const tongThanhToan = computed(() => {
-  if (!tinhPhi.value) return cartTotal.value
-  return cartTotal.value + tinhPhi.value.total
-})
+
 const handleThanhtoan = async () => {
   if (!name.value || !phone.value || !address.value || !paymentMethod.value) {
     alert('Vui lòng nhập đầy đủ thông tin!');
     return;
   }
-
   const order = {
-    id: Date.now(),
+    id: String(Date.now()),
     userId: currentUser.value ? currentUser.value.id : null,
     name: name.value,
     phone: phone.value,
@@ -112,28 +114,37 @@ const handleThanhtoan = async () => {
     ship_fee: tinhPhi.value ? tinhPhi.value.total : 0,
     grand_total: tongThanhToan.value,
     paymentMethod: paymentMethod.value,
-    status: "Đang xử lý",
+    paymentStatus: paymentMethod.value === 'cod' ? 'Chưa thanh toán' : 'Đã thanh toán',
+    status: "Chờ xác nhận",
     createdAt: new Date().toISOString()
   };
-
   try {
-    await axios.post('http://localhost:3000/orders', order);
-    const existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
-    existingOrders.push(order);
-    localStorage.setItem('orders', JSON.stringify(existingOrders));
+    if (paymentMethod.value === 'bank') {
+      const order_id_random = Math.floor(Math.random() * 1000000) + 1;
+      const res = await axios.post('http://localhost/vnpay/createPayment.php',
+        { order_id: order_id_random, amount: tongThanhToan.value });
+      if (res.data.paymentUrl) {
+        await axios.post('http://localhost:3000/orders', order);
+        const existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
+        existingOrders.push(order);
+        localStorage.setItem('orders', JSON.stringify(existingOrders));
+        window.location.href = res.data.paymentUrl;
+      } else {
+        alert('Không kết nối được server VNPAY');
 
-    store.dispatch('cart/clearCart');
-
-    alert('Thanh toán thành công! Đơn hàng đã được lưu.');
-    router.push('/');
+      }
+    } else {
+      await axios.post('http://localhost:3000/orders', order);
+      const existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
+      existingOrders.push(order);
+      localStorage.setItem('orders', JSON.stringify(existingOrders));
+      store.dispatch('cart/clearCart'); alert('Đặt hàng thành công!');
+    }
   } catch (error) {
     console.error(error);
     alert('Có lỗi xảy ra khi thanh toán!');
   }
 };
-
-
-
 </script>
 
 <template>
@@ -218,7 +229,9 @@ const handleThanhtoan = async () => {
     </section>
     <div class="checkout-form bg-white p-4 rounded-4 shadow-sm mt-4">
       <h5 class="fw-bold mb-3">Thông tin thanh toán</h5>
-
+      <div v-if="message" :class="['alert', messageType === 'success' ? 'alert-success' : 'alert-danger']">
+        {{ message }}
+      </div>
       <form>
         <div class="row">
           <div class="col-md-6 mb-3">
@@ -286,11 +299,6 @@ const handleThanhtoan = async () => {
               <input class="form-check-input" type="radio" name="paymentMethod" value="bank" v-model="paymentMethod" />
               <label class="form-check-label">Chuyển khoản ngân hàng</label>
             </div>
-
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="paymentMethod" value="momo" v-model="paymentMethod" />
-              <label class="form-check-label">Ví MoMo</label>
-            </div>
           </div>
 
           <div v-if="tinhPhi" class="col-md-12 mb-3">
@@ -314,19 +322,14 @@ const handleThanhtoan = async () => {
             </div>
           </div>
 
-
-
         </div>
         <div class="text-end mt-4">
-          <button class="btn btn-success px-4" type="submit" @click="handleThanhtoan()">Thanh toán</button>
+          <button class="btn btn-success px-4" type="button" @click="handleThanhtoan()">Thanh toán</button>
         </div>
       </form>
     </div>
 
   </div>
-  <!-- Form thanh toán -->
-
-
 </template>
 
 <style scoped>

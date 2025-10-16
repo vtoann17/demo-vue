@@ -1,11 +1,16 @@
 <script setup>
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 const router = useRouter();
+const store = useStore();
 
 onMounted(() => {
   localStorage.removeItem("currentUser");
+
+  store.dispatch("cart/clearCart");
+
   setTimeout(() => router.push("/"), 1000);
 });
 </script>

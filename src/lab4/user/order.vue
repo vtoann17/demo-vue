@@ -93,9 +93,9 @@ const filteredOrders = computed(() => {
                             <thead class="table-primary">
                                 <tr>
                                     <th>ID</th>
-                                    <th>Khách hàng</th>
-                                    <th>SĐT</th>
-                                    <th>Địa chỉ</th>
+                                    <th>Tên khách hàng</th>
+                                    <th>Phương thức thanh toán</th>
+                                    <th>Trạng thái thanh toán</th>
                                     <th>Tổng tiền</th>
                                     <th>Trạng thái</th>
                                     <th>Ngày đặt</th>
@@ -107,8 +107,13 @@ const filteredOrders = computed(() => {
                                 <tr v-for="item in filteredOrders" :key="item.id">
                                     <td class="fw-semibold text-primary">#{{ item.id }}</td>
                                     <td>{{ item.name }}</td>
-                                    <td>{{ item.phone }}</td>
-                                    <td class="text-start">{{ item.address }}</td>
+                                    <td>{{ item.paymentMethod === 'cod' ? 'COD' : 'VNPAY' }}</td>
+                                    <td>
+                                        <span
+                                            :class="item.paymentStatus === 'Đã thanh toán' ? 'text-success' : 'text-warning'">
+                                            {{ item.paymentStatus }}
+                                        </span>
+                                    </td>
                                     <td class="text-danger fw-bold">
                                         {{ Number(item.grand_total || item.total).toLocaleString('vi-VN') }}₫
                                     </td>
@@ -116,8 +121,7 @@ const filteredOrders = computed(() => {
                                     <td>{{ new Date(item.createdAt).toLocaleDateString('vi-VN') }}</td>
                                     <td>
                                         <button v-if="item.status === 'Chờ xác nhận' || item.status === 'Đã xác nhận'"
-                                            class="btn btn-sm btn-outline-danger" @click="huyDon(item.id)">
-                                            Hủy
+                                            class="btn btn-sm btn-outline-danger" @click="huyDon(item.id)"> Hủy
                                         </button>
                                     </td>
                                 </tr>

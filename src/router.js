@@ -20,6 +20,9 @@ import Cart from './lab4/cart.vue';
 import Wishlist from './lab4/user/wishlist.vue';
 import Adminorder from './lab4/admin/adminorder.vue';
 import Order from './lab4/user/order.vue';
+import Payment from './lab4/payment.vue';
+import PaymentSucces from './lab4/paymentSucces.vue';
+import PaymentFailed from './lab4/paymentFailed.vue';
 
 
 const routes = [
@@ -42,6 +45,9 @@ const routes = [
   { path: '/cart', name: 'Cart', component: Cart, meta: { isAuth: true } },
   {path: '/user/wishlist', name: 'Wishlist', component: Wishlist, meta: {isAuth: false}},
   {path: '/user/order', name: 'Order', component: Order, meta: {isAuth: false}},
+  {path: '/payment', name: 'Payment', component: Payment },
+  {path: '/paymentSucces', name: 'Paymentsucces', component: PaymentSucces},
+    {path: '/paymentFailed', name: 'Paymentfailed', component: PaymentFailed},
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
 ]
 

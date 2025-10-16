@@ -102,7 +102,7 @@ const cartCount = computed(() => store.getters['cart/cartCount'])
               <router-link class="dropdown-item" to="/admin/products">Trang quản lý</router-link>
             </li>
             <li v-if="currentUser.role === 'user'">
-              <router-link class="dropdown-item" to="/profile">Hồ sơ</router-link>
+              <router-link class="dropdown-item" to="/user/profile">Hồ sơ</router-link>
             </li>
             <li>
               <hr class="dropdown-divider" />

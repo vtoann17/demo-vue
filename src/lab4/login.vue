@@ -8,12 +8,15 @@ const username = ref('')
 const password = ref('')
 const message = ref('')
 const isSuccess = ref(false)
+
 const checkLogin = async (username, password) => {
-  const response = await axios.get('http://localhost:3000/users');
+  const response = await axios.get('http://localhost:3000/users')
   if (response.status == 200) {
-    const user = response.data.find(item => item.username === username && item.password === password)
+    const user = response.data.find(
+      (item) => item.username === username && item.password === password
+    )
     if (user) {
-      localStorage.setItem('currentUser', JSON.stringify(user));
+      localStorage.setItem('currentUser', JSON.stringify(user))
       return true
     }
   }
@@ -21,28 +24,31 @@ const checkLogin = async (username, password) => {
 }
 
 const handleDangNhap = async () => {
-  if (username.value === "") {
-    message.value = "Tên không được để trống"
+  if (username.value === '') {
+    message.value = 'Tên không được để trống'
+    return
+  } else if (password.value === '') {
+    message.value = 'Mật khẩu không được để trống'
+    return
   }
-  else if (password.value === "") {
-    message.value = "Mật khẩu không được để trống"
-  }
-  const login = await checkLogin(username.value, password.value);
+
+  const login = await checkLogin(username.value, password.value)
 
   if (login) {
-    message.value = 'Đăng nhập thành công';
-    isSuccess.value = true;
+    message.value = 'Đăng nhập thành công'
+    isSuccess.value = true
+    const redirectPath = localStorage.getItem('redirectAfterLogin') || '/'
+    localStorage.removeItem('redirectAfterLogin')
     setTimeout(() => {
-      router.push('/')
-    }, 2000)
+      router.push(redirectPath)
+    }, 1000)
   } else {
-    message.value = 'Đăng nhập thất bại';
-    isSuccess.value = false;
+    message.value = 'Đăng nhập thất bại'
+    isSuccess.value = false
   }
 }
-
-
 </script>
+
 <template>
   <div class="auth-container">
     <div class="auth-box">
@@ -52,13 +58,22 @@ const handleDangNhap = async () => {
           {{ message }}
         </p>
         <div class="form-group">
-          <input type="text" v-model="username" placeholder="Tên đăng nhập" class="form-control" />
+          <input
+            type="text"
+            v-model="username"
+            placeholder="Tên đăng nhập"
+            class="form-control"
+          />
         </div>
         <div class="form-group">
-          <input type="password" v-model="password" placeholder="Mật khẩu" class="form-control" />
+          <input
+            type="password"
+            v-model="password"
+            placeholder="Mật khẩu"
+            class="form-control"
+          />
         </div>
         <button type="submit" class="btn-submit">Đăng nhập</button>
-        
       </form>
       <p class="text-note">
         Bạn chưa có tài khoản?
@@ -67,6 +82,7 @@ const handleDangNhap = async () => {
     </div>
   </div>
 </template>
+
 <style scoped>
 .auth-container {
   display: flex;

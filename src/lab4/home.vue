@@ -13,6 +13,7 @@ const products = ref([])
 const categories = ref([])
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000"
+console.log(API_URL)
 
 onMounted(async () => {
     const savedUser = localStorage.getItem('currentUser')
@@ -40,9 +41,15 @@ const showMessage = (msg) => {
 }
 
 const addToCart = (product) => {
-    store.dispatch('cart/addToCart', product)
-    showMessage('Đã thêm sản phẩm vào giỏ hàng!')
+  if (!currentUser.value) {
+    localStorage.setItem('redirectAfterLogin', router.currentRoute.value.fullPath)
+    goTo('/login')
+    return
+  }
+  store.dispatch('cart/addToCart', product)
+  showMessage('Đã thêm sản phẩm vào giỏ hàng!')
 }
+
 
 const cartCount = computed(() => store.getters['cart/cartCount'])
 </script>
@@ -78,7 +85,7 @@ const cartCount = computed(() => store.getters['cart/cartCount'])
                                 <router-link class="dropdown-item" to="/admin/products">Trang quản lý</router-link>
                             </li>
                             <li v-if="currentUser.role === 'user'">
-                                <router-link class="dropdown-item" to="/profile">Hồ sơ</router-link>
+                                <router-link class="dropdown-item" to="/user/profile">Hồ sơ</router-link>
                             </li>
                             <li>
                                 <hr class="dropdown-divider" />

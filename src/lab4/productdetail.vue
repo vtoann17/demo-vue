@@ -41,11 +41,47 @@ const showMessage = (msg) => {
 }
 
 const addToCart = (product) => {
+  if (!currentUser.value) {
+    localStorage.setItem('redirectAfterLogin', router.currentRoute.value.fullPath)
+    goTo('/login')
+    return
+  }
   store.dispatch('cart/addToCart', product)
   showMessage('Đã thêm sản phẩm vào giỏ hàng!')
 }
 
 const cartCount = computed(() => store.getters['cart/cartCount'])
+const addToWishlist = async (product) => {
+  if (!currentUser.value) {
+    localStorage.setItem('redirectAfterLogin', router.currentRoute.value.fullPath)
+    goTo('/login')
+    return
+  }
+  const wishlist = JSON.parse(localStorage.getItem('wishlist')) || []
+
+  const exists = wishlist.some(item => item.id === product.id)
+  if (exists) {
+    showMessage('Sản phẩm đã có trong danh sách yêu thích!')
+    return
+  }
+
+  wishlist.push(product)
+  localStorage.setItem('wishlist', JSON.stringify(wishlist))
+
+  const response = await axios.post('http://localhost:3000/wishlist', {
+    userId: currentUser.value.id,
+    productId: product.id,
+    name: product.name,
+    price: product.price,
+    image: product.image,
+    category: product.category
+  })
+
+  if (response.status === 201) {
+    showMessage('Đã thêm vào danh sách yêu thích!')
+  }
+}
+
 </script>
 
 <template>
@@ -75,9 +111,11 @@ const cartCount = computed(() => store.getters['cart/cartCount'])
               <router-link class="dropdown-item" to="/admin/products">Trang quản lý</router-link>
             </li>
             <li v-if="currentUser.role === 'user'">
-              <router-link class="dropdown-item" to="/profile">Hồ sơ</router-link>
+              <router-link class="dropdown-item" to="/user/profile">Hồ sơ</router-link>
             </li>
-            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
             <li><router-link class="dropdown-item text-danger" to="/logout">Đăng xuất</router-link></li>
           </ul>
         </div>
@@ -110,7 +148,7 @@ const cartCount = computed(() => store.getters['cart/cartCount'])
             <button class="btn btn-success px-4 py-2 fw-semibold shadow-sm" @click="addToCart(product)">
               🛒 Thêm vào giỏ hàng
             </button>
-            <button class="btn btn-outline-danger px-4 py-2 fw-semibold">
+            <button class="btn btn-outline-danger px-4 py-2 fw-semibold" @click="addToWishlist(product)">
               ❤️ Yêu thích
             </button>
             <button @click="goTo('/productlist')" class="btn btn-outline-secondary px-4 py-2 fw-semibold">
@@ -120,7 +158,7 @@ const cartCount = computed(() => store.getters['cart/cartCount'])
         </div>
       </div>
     </div>
-  </div>  
+  </div>
 
   <div v-if="relatedProducts.length" class="container my-5">
     <h3 class="fw-bold mb-4 text-center text-primary">Sản phẩm liên quan</h3>
@@ -249,15 +287,28 @@ const cartCount = computed(() => store.getters['cart/cartCount'])
 }
 
 @keyframes fadeInOut {
-  0% { opacity: 0; transform: translate(-50%, -20px); }
-  10%, 90% { opacity: 1; transform: translate(-50%, 0); }
-  100% { opacity: 0; transform: translate(-50%, -20px); }
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+
+  10%,
+  90% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
 }
 
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s;
 }
+
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;

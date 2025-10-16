@@ -4,8 +4,6 @@ import axios from 'axios'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const activeMenu = ref('profile')
-
 const message = ref('')
 const isSuccess = ref(false)
 const currentUser = JSON.parse(localStorage.getItem('currentUser'))
@@ -16,7 +14,10 @@ const user = reactive({
   username: '',
   password: '',
   role: '',
-  avatar: ''
+  avatar: '',
+  age: '',
+  gender: '',
+  email: ''
 })
 
 const preview = ref('')
@@ -26,7 +27,6 @@ onMounted(async () => {
     message.value = 'Không tìm thấy thông tin người dùng. Vui lòng đăng nhập lại.'
     return
   }
-
   const res = await axios.get(`http://localhost:3000/users/${userId}`)
   if (res.status === 200) {
     Object.assign(user, res.data)
@@ -66,45 +66,45 @@ const handleUpdate = async () => {
 
 const handleLogout = () => {
   localStorage.removeItem('currentUser')
-  router.push('/login')
+  router.push('/')
 }
+
+const goTo = (path) => router.push(path)
 </script>
 
 <template>
-  <div class="user-panel">
-    <div class="sidebar">
-      <h4 class="text-white text-center mb-4">Menu người dùng</h4>
-      <ul class="menu">
-        <li @click="goTo('/')"><i class="bi bi-house-door"></i> Trang chủ</li>
-        <li :class="{ active: activeMenu === 'profile' }" @click="activeMenu = 'profile'">Thông tin cá nhân</li>
-        <li :class="{ active: activeMenu === 'wishlist' }" @click="activeMenu = 'wishlist'">Sản phẩm mong muốn</li>
-        <li class="logout" @click="handleLogout">Đăng xuất</li>
-      </ul>
-    </div>
-    <div class="content p-4">
-      <div v-if="activeMenu === 'profile'" class="card shadow border-0 rounded-4 p-4">
-        <h3 class="text-center fw-bold text-primary mb-3">Hồ sơ người dùng</h3>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h3 class="logo">Menu người dùng</h3>
+      <nav>
+        <ul>
+          <li @click="goTo('/')"><i class="bi bi-house-door"></i> Trang chủ</li>
+          <li class="active"><i class="bi bi-person"></i> Hồ sơ</li>
+          <li @click="goTo('/user/wishlist')"><i class="bi bi-heart"></i>Danh sách mong muốn</li>
+          <li @click="goTo('/user/order')"><i class="bi bi-heart"></i>Đơn hàng</li>
+          <li @click="handleLogout"><i class="bi bi-box-arrow-right"></i> Đăng xuất</li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <main class="content">
+      <div class="card shadow border-0 rounded-4 p-4 w-50 mx-auto">
+        <h3 class="fw-bold text-primary text-center mb-3">Hồ sơ người dùng</h3>
         <p class="text-center text-muted mb-4">Xem và chỉnh sửa thông tin tài khoản của bạn</p>
 
         <transition name="fade">
-          <div
-            v-if="message"
-            class="alert text-center fw-semibold py-2"
-            :class="isSuccess ? 'alert-success' : 'alert-danger'"
-          >
+          <div v-if="message" class="alert text-center fw-semibold py-2"
+            :class="isSuccess ? 'alert-success' : 'alert-danger'">
             {{ message }}
           </div>
         </transition>
 
         <form @submit.prevent="handleUpdate">
           <div class="text-center mb-3">
-            <img
-              v-if="preview"
-              :src="preview"
-              alt="Avatar"
-              class="rounded-circle mb-2 shadow"
-              style="width: 100px; height: 100px; object-fit: cover;"
-            />
+            <img v-if="preview" :src="preview" alt="Avatar" class="rounded-circle mb-2 shadow"
+              style="width: 100px; height: 100px; object-fit: cover;" />
             <div>
               <input type="file" @change="handleAvatarChange" accept="image/*" class="form-control mt-2" />
             </div>
@@ -121,8 +121,30 @@ const handleLogout = () => {
           </div>
 
           <div class="mb-3">
+            <label class="form-label fw-semibold">Email</label>
+            <input v-model="user.email" type="email" class="form-control" placeholder="Nhập email của bạn..." />
+          </div>
+
+          <div class="mb-3">
             <label class="form-label fw-semibold">Mật khẩu</label>
             <input v-model="user.password" type="password" class="form-control" placeholder="Nhập mật khẩu..." />
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">Tuổi</label>
+              <input v-model="user.age" type="number" min="0" class="form-control" placeholder="Nhập tuổi..." />
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label fw-semibold">Giới tính</label>
+              <select v-model="user.gender" class="form-select">
+                <option disabled value="">-- Chọn giới tính --</option>
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+                <option value="Khác">Khác</option>
+              </select>
+            </div>
           </div>
 
           <div class="mb-3">
@@ -135,84 +157,79 @@ const handleLogout = () => {
           </div>
         </form>
       </div>
-      <div v-else-if="activeMenu === 'wishlist'" class="card shadow border-0 rounded-4 p-4">
-        <h3 class="text-center fw-bold text-primary mb-3">Sản phẩm mong muốn</h3>
-        <p class="text-center text-muted mb-3">Hiển thị danh sách các sản phẩm bạn yêu thích</p>
-        <p class="text-center text-secondary">💖 Tính năng này đang được phát triển 💖</p>
-      </div>
-    </div>
+    </main>
   </div>
 </template>
 
 <style scoped>
-.user-panel {
+.admin-layout {
   display: flex;
   height: 100vh;
-  background-color: #f8f9fa;
-  margin: 0;
+  background: #f1f3f6;
 }
 
+/* Sidebar */
 .sidebar {
-  width: 240px;
-  background: linear-gradient(180deg, #007bff, #0056d2);
-  color: white;
-  padding: 20px 10px 20px 0; /* giảm padding trái để sát mép */
-  margin: 0;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-  position: fixed; /* giữ cố định bên trái */
+  width: 230px;
+  background: linear-gradient(180deg, #0d6efd, #003d9c);
+  color: #fff;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
   top: 0;
-  left: 0;
   bottom: 0;
+  left: 0;
 }
 
-.sidebar .menu {
+.sidebar .logo {
+  font-size: 22px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.sidebar ul {
   list-style: none;
-  padding-left: 0;
+  padding: 0;
   margin: 0;
 }
 
-.sidebar .menu li {
-  padding: 10px 15px;
-  border-radius: 8px;
-  margin-bottom: 8px;
+.sidebar li {
+  padding: 12px 25px;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.sidebar .menu li:hover {
+.sidebar li:hover,
+.sidebar li.active {
   background: rgba(255, 255, 255, 0.2);
+  border-left: 4px solid #fff;
 }
 
-.sidebar .menu li.active {
-  background: white;
-  color: #007bff;
-  font-weight: 600;
+.sidebar i {
+  font-size: 18px;
 }
 
-.sidebar .menu li.logout {
-  margin-top: 20px;
-  background: #dc3545;
-  text-align: center;
-}
-
-.sidebar .menu li.logout:hover {
-  background: #c82333;
-}
-
+/* Content */
 .content {
-  flex-grow: 1;
+  flex: 1;
+  margin-left: 230px;
+  padding: 25px;
   overflow-y: auto;
-  padding: 30px;
-  margin-left: 240px; /* chừa chỗ cho sidebar cố định */
 }
 
+/* Fade */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.4s ease;
+  transition: opacity 0.3s ease;
 }
+
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
 }
-
 </style>

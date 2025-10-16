@@ -46,21 +46,27 @@
       "id": "410c"
     },
     {
-      "id": "e559",
-      "name": "Mô hình MG Sky Defender EINTA-INDUSTRIES 1/72",
+      "name": "MG Sky Defender EINTA-INDUSTRIES 1/72",
       "price": 2600000,
-      "category": "Master Grade (MG)",
-      "quantity": 5,
       "image": "https://fuwafuwaland.ca/cdn/shop/files/rn-image_picker_lib_temp_58a9e4e3-a5f1-4c02-836c-71340e7143ab.png?v=1753109415",
-      "description": "Sky Defender là mẫu mecha tấn công – phòng thủ thế hệ mới do EINTA INDUSTRIES phát triển, mang phong cách tương lai với giáp góc cạnh, đôi cánh phản lực lớn và khả năng chiến đấu linh hoạt trên không.\nMô hình tỉ lệ 1/72, thiết kế chi tiết cao, khớp nối linh hoạt, hiệu ứng bay ấn tượng. Bộ kit nổi bật với vũ khí năng lượng kép, khiên phòng thủ, đôi cánh cơ động, cùng màu sơn chủ đạo trắng – xanh – xám kim loại tạo cảm giác mạnh mẽ, hiện đ"
+      "category": "Master Grade (MG)",
+      "description": "Sky Defender là mẫu mecha tấn công – phòng thủ thế hệ mới do EINTA INDUSTRIES phát triển, mang phong cách tương lai với giáp góc cạnh, đôi cánh phản lực lớn và khả năng chiến đấu linh hoạt trên không.\nMô hình tỉ lệ 1/72, thiết kế chi tiết cao, khớp nối linh hoạt, hiệu ứng bay ấn tượng. Bộ kit nổi bật với vũ khí năng lượng kép, khiên phòng thủ, đôi cánh cơ động, cùng màu sơn chủ đạo trắng – xanh – xám kim loại tạo cảm giác mạnh mẽ, hiện đ",
+      "quantity": 5,
+      "id": "e559"
+    }
+  ],
+  "wishlist": [
+    {
+      "id": "5f86",
+      "userId": "09c1",
+      "productId": "e559",
+      "name": "MG Sky Defender EINTA-INDUSTRIES 1/72",
+      "price": 2600000,
+      "image": "https://fuwafuwaland.ca/cdn/shop/files/rn-image_picker_lib_temp_58a9e4e3-a5f1-4c02-836c-71340e7143ab.png?v=1753109415",
+      "category": "Master Grade (MG)"
     }
   ],
   "categories": [
-    {
-      "id": "cat1",
-      "name": "High Grade (HG)",
-      "description": "Dòng mô hình 1/144 phổ biến, dễ lắp ráp, giá tốt cho người mới bắt đầu."
-    },
     {
       "id": "cat2",
       "name": "Real Grade (RG)",
@@ -75,16 +81,14 @@
       "id": "cat4",
       "name": "Perfect Grade (PG)",
       "description": "Dòng mô hình 1/60 cao cấp nhất, chi tiết và kích thước cực lớn."
+    },
+    {
+      "id": "f945",
+      "name": "High Grade (HG) ",
+      "description": "Dòng mô hình 1/144 phổ biến, dễ lắp ráp, giá tốt cho người mới bắt đầu."
     }
   ],
   "users": [
-    {
-      "id": "2589",
-      "name": "Hoàng Văn Toàn",
-      "username": "toan",
-      "password": "170906",
-      "role": "admin"
-    },
     {
       "id": "4818",
       "name": "Hoàng Văn Toàn",
@@ -93,11 +97,93 @@
       "role": "user"
     },
     {
-      "id": "09c1",
       "name": "Toàn",
       "username": "toan17",
       "password": "170906",
-      "role": "user"
+      "role": "user",
+      "avatar": "",
+      "age": 18,
+      "gender": "Nam",
+      "email": "toanhvpk04080@gmail.com",
+      "id": "09c1"
+    },
+    {
+      "name": "Toàn",
+      "username": "toan",
+      "password": "170906",
+      "role": "admin",
+      "avatar": "",
+      "age": 18,
+      "gender": "Nam",
+      "email": "toanhvpk04080@gmail.com",
+      "id": "3ede"
+    }
+  ],
+  "orders": [
+    {
+      "id": "1760537093423",
+      "userId": "09c1",
+      "name": "Hoàng Văn Toàn",
+      "phone": "0383983952",
+      "address": "62-Tân Bằng",
+      "note": "12345",
+      "province_id": 210,
+      "district_id": 1787,
+      "wards_id": "400401",
+      "cart": [
+        {
+          "name": "MG Sky Defender EINTA-INDUSTRIES 1/72",
+          "price": 2600000,
+          "image": "https://fuwafuwaland.ca/cdn/shop/files/rn-image_picker_lib_temp_58a9e4e3-a5f1-4c02-836c-71340e7143ab.png?v=1753109415",
+          "category": "Master Grade (MG)",
+          "description": "Sky Defender là mẫu mecha tấn công – phòng thủ thế hệ mới do EINTA INDUSTRIES phát triển, mang phong cách tương lai với giáp góc cạnh, đôi cánh phản lực lớn và khả năng chiến đấu linh hoạt trên không.\nMô hình tỉ lệ 1/72, thiết kế chi tiết cao, khớp nối linh hoạt, hiệu ứng bay ấn tượng. Bộ kit nổi bật với vũ khí năng lượng kép, khiên phòng thủ, đôi cánh cơ động, cùng màu sơn chủ đạo trắng – xanh – xám kim loại tạo cảm giác mạnh mẽ, hiện đ",
+          "quantity": 1,
+          "id": "e559"
+        }
+      ],
+      "total": 2600000,
+      "ship_fee": 39002,
+      "grand_total": 2639002,
+      "paymentMethod": "cod",
+      "status": "Đã hủy",
+      "createdAt": "2025-10-15T14:04:53.423Z"
+    },
+    {
+      "id": "1760537298471",
+      "userId": "09c1",
+      "name": "Hoàng Văn Toàn",
+      "phone": "0383983952",
+      "address": "62-Tân Bằng",
+      "note": "893474",
+      "province_id": 210,
+      "district_id": 1787,
+      "wards_id": "400401",
+      "cart": [
+        {
+          "name": "MG Sky Defender EINTA-INDUSTRIES 1/72",
+          "price": 2600000,
+          "image": "https://fuwafuwaland.ca/cdn/shop/files/rn-image_picker_lib_temp_58a9e4e3-a5f1-4c02-836c-71340e7143ab.png?v=1753109415",
+          "category": "Master Grade (MG)",
+          "description": "Sky Defender là mẫu mecha tấn công – phòng thủ thế hệ mới do EINTA INDUSTRIES phát triển, mang phong cách tương lai với giáp góc cạnh, đôi cánh phản lực lớn và khả năng chiến đấu linh hoạt trên không.\nMô hình tỉ lệ 1/72, thiết kế chi tiết cao, khớp nối linh hoạt, hiệu ứng bay ấn tượng. Bộ kit nổi bật với vũ khí năng lượng kép, khiên phòng thủ, đôi cánh cơ động, cùng màu sơn chủ đạo trắng – xanh – xám kim loại tạo cảm giác mạnh mẽ, hiện đ",
+          "quantity": 1,
+          "id": "e559"
+        },
+        {
+          "id": "pg01",
+          "name": "PG Unleashed RX-78-2 Gundam",
+          "price": 5000000,
+          "image": "https://product.hstatic.net/200000326537/product/pg-unleashed-rx-78-2-gundam-8_3135f704668d41e0aa7a9ecf7876ff1f_grande.jpg",
+          "category": "Perfect Grade (PG)",
+          "description": "Perfect Grade Unleashed RX-78-2 – kiệt tác Gundam tỉ lệ 1/60 với cơ chế LED, chi tiết cực cao và khả năng tạo dáng đỉnh cao.",
+          "quantity": 1
+        }
+      ],
+      "total": 7600000,
+      "ship_fee": 39002,
+      "grand_total": 7639002,
+      "paymentMethod": "cod",
+      "status": "Đang giao hàng",
+      "createdAt": "2025-10-15T14:08:18.471Z"
     }
   ],
   "comments": [

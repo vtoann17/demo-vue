@@ -14,6 +14,11 @@ onMounted(async () => {
 })
 
 const handleDelete = async (id) => {
+  const user = users.value.find(u => u.id === id)
+  if (user && user.role === 'admin') {
+    alert('Không thể xoá tài khoản admin!')
+    return
+  }
   const isConfirm = confirm(`Bạn có chắc muốn xoá tài khoản ID = ${id}?`)
   if (isConfirm) {
     const response = await axios.delete(`http://localhost:3000/users/${id}`)
@@ -24,6 +29,7 @@ const handleDelete = async (id) => {
     }
   }
 }
+
 
 const loadUsers = async () => {
   const response = await axios.get('http://localhost:3000/users')
@@ -44,6 +50,7 @@ const loadUsers = async () => {
           <li @click="goTo('/admin/products')"><i class="bi bi-box"></i> Sản phẩm</li>
           <li @click="goTo('/admin/categories')"><i class="bi bi-tags"></i> Danh mục</li>
           <li @click="goTo('/admin/users')" class="active"><i class="bi bi-people"></i> Người dùng</li>
+          <li @click="goTo('/admin/orders')"><i class="bi bi-receipt"></i> Đơn hàng</li>
           <li @click="goTo('/logout')"><i class="bi bi-box-arrow-right"></i> Đăng xuất</li>
         </ul>
       </nav>

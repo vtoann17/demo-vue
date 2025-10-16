@@ -77,7 +77,7 @@ const clearForm = () => {
 
         <div class="mb-3">
           <label class="form-label fw-semibold">Giá (VNĐ)</label>
-          <input v-model="product.price" type="number" class="form-control" placeholder="Nhập giá..." />
+          <input v-model="product.price" type="number" class="form-control" placeholder="Nhập giá..." min="0" />
         </div>
 
         <div class="mb-3">
@@ -90,7 +90,7 @@ const clearForm = () => {
 
         <div class="mb-3">
           <label class="form-label fw-semibold">Số lượng tồn kho</label>
-          <input v-model="product.quantity" type="number" min="0" class="form-control" placeholder="Nhập số lượng..." />
+          <input v-model="product.quantity" type="number" min="0" class="form-control" placeholder="Nhập số lượng..."  />
         </div>
 
         <div class="mb-3">

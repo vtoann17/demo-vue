@@ -1,4 +1,3 @@
-// src/store/cart.js
 export default {
   namespaced: true,
   state: () => ({

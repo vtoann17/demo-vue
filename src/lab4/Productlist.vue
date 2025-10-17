@@ -18,11 +18,14 @@ const selectedCategory = ref('all')
 const goTo = (path) => router.push(path)
 
 onMounted(async () => {
-  await loadData()
-  await loadCategories()
   const savedUser = localStorage.getItem('currentUser')
-  if (savedUser) currentUser.value = JSON.parse(savedUser)
+  if (savedUser) {
+    currentUser.value = JSON.parse(savedUser)
+    await loadCart(currentUser.value.id)
+  }
+  await Promise.all([loadData(), loadCategories(),])
 })
+
 
 const loadData = async () => {
   const response = await axios.get(`${API_URL}/products`)
@@ -34,6 +37,12 @@ const loadCategories = async () => {
   if (res.status === 200) categories.value = res.data
 }
 
+const loadCart = async (userId) => {
+  const res = await axios.get(`http://localhost:3000/cart?userId=${userId}`)
+  if (res.status === 200) {
+    store.dispatch('cart/setCart', res.data)
+  }
+}
 
 const filteredProducts = computed(() => {
   let result = products.value

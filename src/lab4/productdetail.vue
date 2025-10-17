@@ -24,14 +24,21 @@ onMounted(async () => {
   const id = route.params.id
   await fetchProduct(id)
 
-  const savedUser = localStorage.getItem("currentUser")
-  if (savedUser) currentUser.value = JSON.parse(savedUser)
+ if (savedUser) {
+    currentUser.value = JSON.parse(savedUser)
+    await loadCart(currentUser.value.id)
+  }
 })
 
 watch(() => route.params.id, async (newId) => {
   await fetchProduct(newId)
 })
-
+const loadCart = async (userId) => {
+  const res = await axios.get(`http://localhost:3000/cart?userId=${userId}`)
+  if (res.status === 200) {
+    store.dispatch('cart/setCart', res.data)
+  }
+}
 const successMessage = ref('')
 const showMessage = (msg) => {
   successMessage.value = msg

@@ -122,7 +122,7 @@ const goTo = (path) => router.push(path)
 
           <div class="mb-3">
             <label class="form-label fw-semibold">Email</label>
-            <input v-model="user.email" type="email" class="form-control" placeholder="Nhập email của bạn..." />
+            <input disabled v-model="user.email" type="email" class="form-control" placeholder="Nhập email của bạn..." />
           </div>
 
           <div class="mb-3">

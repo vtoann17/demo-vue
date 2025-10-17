@@ -50,9 +50,9 @@ const tinhPhiShip = async () => {
 
 const loadProvince = async () => {
   const res = await axios.get(`https://online-gateway.ghn.vn/shiip/public-api/master-data/province`, {
-    headers: { 'Token': API_KEY,
-      'Content-Type': 'application/json'
-     }
+    headers: {
+      'Token': API_KEY,
+    }
   })
   provinces.value = res.data.data
 }
@@ -60,9 +60,11 @@ const loadProvince = async () => {
 const loadDistrict = async () => {
   const res = await axios.get(
     `https://online-gateway.ghn.vn/shiip/public-api/master-data/district?province_id=${province_id.value}`,
-    { headers: { 'Token': API_KEY,
-      'Content-Type': 'application/json'
-     } }
+    {
+      headers: {
+        'Token': API_KEY,
+      }
+    }
   )
   districts.value = res.data.data
 }
@@ -70,9 +72,11 @@ const loadDistrict = async () => {
 const loadWard = async () => {
   const res = await axios.get(
     `https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id=${district_id.value}`,
-    { headers: { 'Token': API_KEY,
-      'Content-Type': 'application/json'
-     } }
+    {
+      headers: {
+        'Token': API_KEY,
+      }
+    }
   )
   wards.value = res.data.data
 }
@@ -84,15 +88,67 @@ const tongThanhToan = computed(() => {
   if (!tinhPhi.value) return cartTotal.value
   return cartTotal.value + tinhPhi.value.total
 })
+const successMessage = ref('')
+
+const showMessage = (msg) => {
+  successMessage.value = msg
+  setTimeout(() => {
+    successMessage.value = ''
+  }, 2000)
+}
+const checkStock = async (item) => {
+  try {
+    const res = await axios.get(`http://localhost:3000/products/${item.id}`)
+    const product = res.data
+    const stock = product.quantity ?? 0
+    if (item.quantity > stock) {
+      showMessage(`Sản phẩm "${item.name}" chỉ còn ${stock} trong kho!`)
+      item.quantity = stock
+    } else if (item.quantity < 1) {
+      item.quantity = 1
+    }
+  } catch (error) {
+    console.error('Lỗi khi kiểm tra tồn kho:', error)
+    showMessage('Không thể kiểm tra tồn kho, vui lòng thử lại!')
+  }
+}
 
 const currentUser = ref(null)
-onMounted(() => {
+onMounted(async () => {
   const savedUser = localStorage.getItem('currentUser')
-  if (savedUser) currentUser.value = JSON.parse(savedUser)
+  if (savedUser) {
+    currentUser.value = JSON.parse(savedUser)
+    await loadCart(currentUser.value.id)
+  }
+  const savedCart = localStorage.getItem('cart')
+  if (savedCart) {
+    store.dispatch('cart/setCart', JSON.parse(savedCart))
+  }
+
   loadProvince()
 })
 
+const loadCart = async (userId) => {
+  const res = await axios.get(`http://localhost:3000/cart?userId=${userId}`)
+  if (res.status === 200) {
+    store.dispatch('cart/setCart', res.data)
+  }
+}
+
 const remove = (id) => store.dispatch('cart/removeFromCart', id)
+const updateStock = async (cartItems) => {
+  for (const item of cartItems) {
+    try {
+      const res = await axios.get(`http://localhost:3000/products/${item.id}`)
+      const product = res.data
+      const currentStock = product.quantity ?? product.stock ?? 0
+      const newStock = Math.max(currentStock - item.quantity, 0)
+      await axios.patch(`http://localhost:3000/products/${item.id}`, { quantity: newStock })
+    } catch (error) {
+      console.error(`Lỗi khi cập nhật tồn kho cho sản phẩm ${item.id}:`, error)
+    }
+  }
+}
 
 const handleThanhtoan = async () => {
   if (!name.value || !phone.value || !address.value || !paymentMethod.value) {
@@ -119,12 +175,22 @@ const handleThanhtoan = async () => {
     createdAt: new Date().toISOString()
   };
   try {
+    const clearCartOnServer = async (userId) => {
+      const res = await axios.get(`http://localhost:3000/cart?userId=${userId}`);
+      for (const item of res.data) {
+        await axios.delete(`http://localhost:3000/cart/${item.id}`);
+      }
+    };
+
     if (paymentMethod.value === 'bank') {
       const order_id_random = Math.floor(Math.random() * 1000000) + 1;
       const res = await axios.post('http://localhost/vnpay/createPayment.php',
         { order_id: order_id_random, amount: tongThanhToan.value });
       if (res.data.paymentUrl) {
         await axios.post('http://localhost:3000/orders', order);
+        await updateStock(cartItems.value);
+        await clearCartOnServer(currentUser.value.id);
+        store.dispatch('cart/clearCart');
         const existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
         existingOrders.push(order);
         localStorage.setItem('orders', JSON.stringify(existingOrders));
@@ -135,10 +201,14 @@ const handleThanhtoan = async () => {
       }
     } else {
       await axios.post('http://localhost:3000/orders', order);
+      await updateStock(cartItems.value);
+      await clearCartOnServer(currentUser.value.id);
+      store.dispatch('cart/clearCart');
       const existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
       existingOrders.push(order);
       localStorage.setItem('orders', JSON.stringify(existingOrders));
-      store.dispatch('cart/clearCart'); alert('Đặt hàng thành công!');
+      store.dispatch('cart/clearCart'); 
+      router.push('/paymentSucces?method=cod');
     }
   } catch (error) {
     console.error(error);
@@ -196,7 +266,10 @@ const handleThanhtoan = async () => {
     </header>
     <section class="cart-section container py-5">
       <h2 class="fw-bold text-center mb-4">Giỏ hàng</h2>
-
+      <p v-if="successMessage" class="text-center fw-bold py-2 rounded mb-3"
+        style="background-color: #e8f5e9; color: #2e7d32;">
+        {{ successMessage }}
+      </p>
       <div v-if="!cartItems || cartItems.length === 0" class="text-center text-muted py-5">
         <p>Chưa có sản phẩm nào trong giỏ.</p>
         <button class="btn btn-primary mt-3" @click="goTo('/productlist')">
@@ -217,7 +290,8 @@ const handleThanhtoan = async () => {
             </div>
             <div class="d-flex align-items-center gap-2">
               <input type="number" v-model.number="item.quantity" min="1"
-                class="form-control form-control-sm text-center" style="width: 70px;" />
+                class="form-control form-control-sm text-center" style="width: 70px;" @change="checkStock(item)" />
+
               <p class="fw-semibold mb-0">{{ (item.price * item.quantity).toLocaleString() }}₫</p>
               <button class="btn btn-sm btn-outline-danger" @click="remove(item.id)">
                 <i class="bi bi-trash"></i>

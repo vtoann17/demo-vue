@@ -23,8 +23,8 @@ onMounted(async () => {
       store.dispatch('cart/clearCart')
       localStorage.removeItem('cart')
 
-      router.push('/paymentSucces')
-    //   setTimeout(() => router.push('/'), 1500)
+      router.push('/paymentSucces?method=bank')
+      //   setTimeout(() => router.push('/'), 1500)
     } else {
       router.push('/paymentFailed')
     }

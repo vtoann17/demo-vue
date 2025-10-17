@@ -7,7 +7,7 @@
       "image": "https://bizweb.dktcdn.net/100/456/060/files/mo-hinh-rg-wing-gundam-zero-ew-7.png?v=1731385974379",
       "category": "Real Grade (RG)",
       "description": "Real Grade Wing Gundam Zero EW tỉ lệ 1/144 – thiết kế cánh thiên thần nổi bật, khớp linh hoạt, chi tiết tinh xảo.",
-      "quantity": 5
+      "quantity": 4
     },
     {
       "id": "mg01",
@@ -25,7 +25,7 @@
       "image": "https://product.hstatic.net/200000326537/product/pg-unleashed-rx-78-2-gundam-8_3135f704668d41e0aa7a9ecf7876ff1f_grande.jpg",
       "category": "Perfect Grade (PG)",
       "description": "Perfect Grade Unleashed RX-78-2 – kiệt tác Gundam tỉ lệ 1/60 với cơ chế LED, chi tiết cực cao và khả năng tạo dáng đỉnh cao.",
-      "quantity": 2
+      "quantity": 1
     },
     {
       "id": "hg02",
@@ -42,7 +42,7 @@
       "image": "https://m.media-amazon.com/images/I/71muGqdVxnL._AC_SL1421_.jpg",
       "category": "Real Grade (RG)",
       "description": "Wing Gundam Zero EW là phiên bản nâng cấp và hoàn thiện của Wing Gundam Zero, xuất hiện trong OVA Mobile Suit Gundam Wing: Endless Waltz. Thiết kế được thực hiện bởi Hajime Katoki, với phong cách mềm mại, tinh tế và mang nét \"thiên thần\" đặc trưng – nổi bật nhất là đôi cánh trắng khổng lồ tượng trưng cho tự do và tái sinh.",
-      "quantity": 1,
+      "quantity": 0,
       "id": "410c"
     },
     {
@@ -51,10 +51,11 @@
       "image": "https://fuwafuwaland.ca/cdn/shop/files/rn-image_picker_lib_temp_58a9e4e3-a5f1-4c02-836c-71340e7143ab.png?v=1753109415",
       "category": "Master Grade (MG)",
       "description": "Sky Defender là mẫu mecha tấn công – phòng thủ thế hệ mới do EINTA INDUSTRIES phát triển, mang phong cách tương lai với giáp góc cạnh, đôi cánh phản lực lớn và khả năng chiến đấu linh hoạt trên không.\nMô hình tỉ lệ 1/72, thiết kế chi tiết cao, khớp nối linh hoạt, hiệu ứng bay ấn tượng. Bộ kit nổi bật với vũ khí năng lượng kép, khiên phòng thủ, đôi cánh cơ động, cùng màu sơn chủ đạo trắng – xanh – xám kim loại tạo cảm giác mạnh mẽ, hiện đ",
-      "quantity": 5,
+      "quantity": 0,
       "id": "e559"
     }
   ],
+  "cart": [],
   "wishlist": [],
   "categories": [
     {
@@ -73,7 +74,7 @@
       "description": "Dòng mô hình 1/60 cao cấp nhất, chi tiết và kích thước cực lớn."
     },
     {
-      "id": "f945",
+      "id": "cat5",
       "name": "High Grade (HG) ",
       "description": "Dòng mô hình 1/144 phổ biến, dễ lắp ráp, giá tốt cho người mới bắt đầu."
     }
@@ -109,7 +110,188 @@
       "id": "3ede"
     }
   ],
-  "orders": [],
+  "orders": [
+    {
+      "id": "1760630603279",
+      "userId": "09c1",
+      "name": "Hoàng Văn Toàn",
+      "phone": "0383983952",
+      "address": "62-tan bang",
+      "note": "1234567",
+      "province_id": 210,
+      "district_id": 1787,
+      "wards_id": "400401",
+      "cart": [
+        {
+          "id": "e559",
+          "name": "MG Sky Defender EINTA-INDUSTRIES 1/72",
+          "price": 2600000,
+          "image": "https://fuwafuwaland.ca/cdn/shop/files/rn-image_picker_lib_temp_58a9e4e3-a5f1-4c02-836c-71340e7143ab.png?v=1753109415",
+          "category": "Master Grade (MG)",
+          "description": "Sky Defender là mẫu mecha tấn công – phòng thủ thế hệ mới do EINTA INDUSTRIES phát triển, mang phong cách tương lai với giáp góc cạnh, đôi cánh phản lực lớn và khả năng chiến đấu linh hoạt trên không.\nMô hình tỉ lệ 1/72, thiết kế chi tiết cao, khớp nối linh hoạt, hiệu ứng bay ấn tượng. Bộ kit nổi bật với vũ khí năng lượng kép, khiên phòng thủ, đôi cánh cơ động, cùng màu sơn chủ đạo trắng – xanh – xám kim loại tạo cảm giác mạnh mẽ, hiện đ",
+          "quantity": 1,
+          "userId": "09c1"
+        }
+      ],
+      "total": 2600000,
+      "ship_fee": 39002,
+      "grand_total": 2639002,
+      "paymentMethod": "cod",
+      "paymentStatus": "Chưa thanh toán",
+      "status": "Hoàn tất",
+      "createdAt": "2025-10-16T16:03:23.279Z"
+    },
+    {
+      "id": "1760631171199",
+      "userId": "09c1",
+      "name": "toan",
+      "phone": "32974024",
+      "address": "tan bang",
+      "note": "213243",
+      "province_id": 210,
+      "district_id": 1787,
+      "wards_id": "400401",
+      "cart": [
+        {
+          "id": "e559",
+          "name": "MG Sky Defender EINTA-INDUSTRIES 1/72",
+          "price": 2600000,
+          "image": "https://fuwafuwaland.ca/cdn/shop/files/rn-image_picker_lib_temp_58a9e4e3-a5f1-4c02-836c-71340e7143ab.png?v=1753109415",
+          "category": "Master Grade (MG)",
+          "description": "Sky Defender là mẫu mecha tấn công – phòng thủ thế hệ mới do EINTA INDUSTRIES phát triển, mang phong cách tương lai với giáp góc cạnh, đôi cánh phản lực lớn và khả năng chiến đấu linh hoạt trên không.\nMô hình tỉ lệ 1/72, thiết kế chi tiết cao, khớp nối linh hoạt, hiệu ứng bay ấn tượng. Bộ kit nổi bật với vũ khí năng lượng kép, khiên phòng thủ, đôi cánh cơ động, cùng màu sơn chủ đạo trắng – xanh – xám kim loại tạo cảm giác mạnh mẽ, hiện đ",
+          "quantity": 1,
+          "userId": "09c1"
+        }
+      ],
+      "total": 2600000,
+      "ship_fee": 39002,
+      "grand_total": 2639002,
+      "paymentMethod": "cod",
+      "paymentStatus": "Chưa thanh toán",
+      "status": "Chờ xác nhận",
+      "createdAt": "2025-10-16T16:12:51.199Z"
+    },
+    {
+      "id": "1760670121070",
+      "userId": "09c1",
+      "name": "Hoàng Văn Toàn",
+      "phone": "0383983952",
+      "address": "62-tan bang",
+      "note": "2132453",
+      "province_id": 210,
+      "district_id": 1787,
+      "wards_id": "400401",
+      "cart": [
+        {
+          "id": "09b6",
+          "userId": "09c1",
+          "productId": "e559",
+          "name": "MG Sky Defender EINTA-INDUSTRIES 1/72",
+          "image": "https://fuwafuwaland.ca/cdn/shop/files/rn-image_picker_lib_temp_58a9e4e3-a5f1-4c02-836c-71340e7143ab.png?v=1753109415",
+          "price": 2600000,
+          "quantity": 1,
+          "total": 2600000
+        }
+      ],
+      "total": 2600000,
+      "ship_fee": 39002,
+      "grand_total": 2639002,
+      "paymentMethod": "bank",
+      "paymentStatus": "Đã thanh toán",
+      "status": "Chờ xác nhận",
+      "createdAt": "2025-10-17T03:02:01.070Z"
+    },
+    {
+      "id": "1760671563159",
+      "userId": "3ede",
+      "name": "Hoàng Văn Toàn",
+      "phone": "0123456788",
+      "address": "tan bang",
+      "note": "237947",
+      "province_id": 210,
+      "district_id": 1787,
+      "wards_id": "400401",
+      "cart": [
+        {
+          "id": "e559",
+          "name": "MG Sky Defender EINTA-INDUSTRIES 1/72",
+          "price": 2600000,
+          "image": "https://fuwafuwaland.ca/cdn/shop/files/rn-image_picker_lib_temp_58a9e4e3-a5f1-4c02-836c-71340e7143ab.png?v=1753109415",
+          "category": "Master Grade (MG)",
+          "description": "Sky Defender là mẫu mecha tấn công – phòng thủ thế hệ mới do EINTA INDUSTRIES phát triển, mang phong cách tương lai với giáp góc cạnh, đôi cánh phản lực lớn và khả năng chiến đấu linh hoạt trên không.\nMô hình tỉ lệ 1/72, thiết kế chi tiết cao, khớp nối linh hoạt, hiệu ứng bay ấn tượng. Bộ kit nổi bật với vũ khí năng lượng kép, khiên phòng thủ, đôi cánh cơ động, cùng màu sơn chủ đạo trắng – xanh – xám kim loại tạo cảm giác mạnh mẽ, hiện đ",
+          "quantity": 1,
+          "userId": "3ede"
+        }
+      ],
+      "total": 2600000,
+      "ship_fee": 39002,
+      "grand_total": 2639002,
+      "paymentMethod": "cod",
+      "paymentStatus": "Chưa thanh toán",
+      "status": "Chờ xác nhận",
+      "createdAt": "2025-10-17T03:26:03.159Z"
+    },
+    {
+      "id": "1760671868767",
+      "userId": "09c1",
+      "name": "Toàn",
+      "phone": "2390410487323",
+      "address": "tan bang",
+      "note": "32545567",
+      "province_id": 210,
+      "district_id": 1787,
+      "wards_id": "400401",
+      "cart": [
+        {
+          "id": "rg01",
+          "name": "RG Wing Gundam Zero EW",
+          "price": 850000,
+          "image": "https://bizweb.dktcdn.net/100/456/060/files/mo-hinh-rg-wing-gundam-zero-ew-7.png?v=1731385974379",
+          "category": "Real Grade (RG)",
+          "description": "Real Grade Wing Gundam Zero EW tỉ lệ 1/144 – thiết kế cánh thiên thần nổi bật, khớp linh hoạt, chi tiết tinh xảo.",
+          "quantity": 1,
+          "userId": "09c1"
+        }
+      ],
+      "total": 850000,
+      "ship_fee": 39002,
+      "grand_total": 889002,
+      "paymentMethod": "bank",
+      "paymentStatus": "Đã thanh toán",
+      "status": "Chờ xác nhận",
+      "createdAt": "2025-10-17T03:31:08.767Z"
+    },
+    {
+      "id": "1760671972766",
+      "userId": "09c1",
+      "name": "Toàn",
+      "phone": "23074394793",
+      "address": "tan bang",
+      "note": "297429435",
+      "province_id": 210,
+      "district_id": 1787,
+      "wards_id": "400401",
+      "cart": [
+        {
+          "id": "410c",
+          "name": "Wing Gundam Zero EW",
+          "price": 1000000,
+          "image": "https://m.media-amazon.com/images/I/71muGqdVxnL._AC_SL1421_.jpg",
+          "category": "Real Grade (RG)",
+          "description": "Wing Gundam Zero EW là phiên bản nâng cấp và hoàn thiện của Wing Gundam Zero, xuất hiện trong OVA Mobile Suit Gundam Wing: Endless Waltz. Thiết kế được thực hiện bởi Hajime Katoki, với phong cách mềm mại, tinh tế và mang nét \"thiên thần\" đặc trưng – nổi bật nhất là đôi cánh trắng khổng lồ tượng trưng cho tự do và tái sinh.",
+          "quantity": 1,
+          "userId": "09c1"
+        }
+      ],
+      "total": 1000000,
+      "ship_fee": 39002,
+      "grand_total": 1039002,
+      "paymentMethod": "bank",
+      "paymentStatus": "Đã thanh toán",
+      "status": "Chờ xác nhận",
+      "createdAt": "2025-10-17T03:32:52.766Z"
+    }
+  ],
   "comments": [
     {
       "id": "1",

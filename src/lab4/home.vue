@@ -12,22 +12,30 @@ const currentUser = ref(null)
 const products = ref([])
 const categories = ref([])
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000"
-console.log(API_URL)
 
 onMounted(async () => {
     const savedUser = localStorage.getItem('currentUser')
-    if (savedUser) currentUser.value = JSON.parse(savedUser)
+    if (savedUser) {
+        currentUser.value = JSON.parse(savedUser)
+        await loadCart(currentUser.value.id)
+    }
     await Promise.all([loadProducts(), loadCategories()])
 })
 
+
 const loadProducts = async () => {
-    const res = await axios.get(`${API_URL}/products`)
+    const res = await axios.get(`http://localhost:3000/products`)
     if (res.status === 200) products.value = res.data
+}
+const loadCart = async (userId) => {
+    const res = await axios.get(`http://localhost:3000/cart?userId=${userId}`)
+    if (res.status === 200) {
+        store.dispatch('cart/setCart', res.data)
+    }
 }
 
 const loadCategories = async () => {
-    const res = await axios.get(`${API_URL}/categories`)
+    const res = await axios.get(`http://localhost:3000/categories`)
     if (res.status === 200) categories.value = res.data
 }
 
@@ -41,13 +49,17 @@ const showMessage = (msg) => {
 }
 
 const addToCart = (product) => {
-  if (!currentUser.value) {
-    localStorage.setItem('redirectAfterLogin', router.currentRoute.value.fullPath)
-    goTo('/login')
-    return
-  }
-  store.dispatch('cart/addToCart', product)
-  showMessage('Đã thêm sản phẩm vào giỏ hàng!')
+    if (!currentUser.value) {
+        localStorage.setItem('redirectAfterLogin', router.currentRoute.value.fullPath)
+        goTo('/login')
+        return
+    }
+    if (product.quantity === 0 || product.status === 'Hết hàng') {
+        showMessage('Sản phẩm này hiện đã hết hàng!')
+        return
+    }
+    store.dispatch('cart/addToCart', product)
+    showMessage('Đã thêm sản phẩm vào giỏ hàng!')
 }
 
 
@@ -248,10 +260,13 @@ const cartCount = computed(() => store.getters['cart/cartCount'])
         opacity: 0;
         transform: translate(-50%, -20px);
     }
-    10%, 90% {
+
+    10%,
+    90% {
         opacity: 1;
         transform: translate(-50%, 0);
     }
+
     100% {
         opacity: 0;
         transform: translate(-50%, -20px);
@@ -262,6 +277,7 @@ const cartCount = computed(() => store.getters['cart/cartCount'])
 .fade-leave-active {
     transition: opacity 0.3s;
 }
+
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;

@@ -14,6 +14,55 @@ onMounted(async () => {
     await loadOrders()
 })
 
+const updateStock = async (cartItems) => {
+    for (const item of cartItems) {
+        try {
+            const res = await axios.get(`http://localhost:3000/products/${item.id}`)
+            const product = res.data
+            const currentStock = product.quantity ?? product.stock ?? 0
+            const newStock = Math.max(currentStock - item.quantity, 0)
+            await axios.patch(`http://localhost:3000/products/${item.id}`, { quantity: newStock })
+        } catch (error) {
+            console.error(`Lỗi khi cập nhật tồn kho cho sản phẩm ${item.id}:`, error)
+        }
+    }
+}
+const muaLai = async (oldOrder) => {
+    try {
+        const products = oldOrder.cart || []
+        if (!products.length) {
+            message.value = 'Đơn hàng không có sản phẩm để mua lại!'
+            setTimeout(() => (message.value = ''), 2000)
+            return
+        }
+        await updateStock(products)
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+        if (currentUser) {
+            for (const item of products) {
+                await axios.post('http://localhost:3000/cart', {
+                    userId: currentUser.id,
+                    productId: item.id,
+                    name: item.name,
+                    image: item.image,
+                    price: item.price,
+                    quantity: item.quantity,
+                    total: item.price * item.quantity
+                })
+            }
+        }
+        localStorage.setItem('cart', JSON.stringify(products))
+        message.value = `Đang chuyển sang giỏ hàng để mua lại đơn #${oldOrder.id}...`
+
+        setTimeout(() => {
+            router.push('/cart')
+        }, 500)
+    } catch (e) {
+        console.error('Lỗi khi mua lại:', e)
+        message.value = 'Lỗi khi thực hiện mua lại đơn hàng'
+        setTimeout(() => (message.value = ''), 2000)
+    }
+}
+
 const loadOrders = async () => {
     try {
         const res = await axios.get('http://localhost:3000/orders')
@@ -22,6 +71,7 @@ const loadOrders = async () => {
         console.error('Lỗi tải đơn hàng:', e)
     }
 }
+
 const huyDon = async (id) => {
     const order = orders.value.find(o => o.id === id)
     if (!order) return
@@ -30,14 +80,24 @@ const huyDon = async (id) => {
         setTimeout(() => message.value = '', 1000)
         return
     }
+
     const confirmCancel = confirm('Bạn có chắc muốn hủy đơn hàng này không?')
     if (!confirmCancel) return
-    const update = { ...order, status: 'Đã hủy' }
-    await axios.put(`http://localhost:3000/orders/${id}`, update)
-    order.status = 'Đã hủy'
-    message.value = `Đơn hàng ${id} đã được hủy`
-    setTimeout(() => message.value = '', 1000)
+
+    try {
+        const res = await axios.delete(`http://localhost:3000/orders/${id}`)
+        if (res.status === 200) {
+            orders.value = orders.value.filter(o => o.id !== id)
+            message.value = `Đơn hàng #${id} đã được hủy và xóa khỏi danh sách!`
+        }
+    } catch (e) {
+        console.error('Lỗi khi hủy đơn:', e)
+        message.value = 'Lỗi khi hủy đơn hàng'
+    }
+
+    setTimeout(() => (message.value = ''), 1500)
 }
+
 const handleLogout = () => {
     localStorage.removeItem('currentUser')
     router.push('/')
@@ -122,6 +182,9 @@ const filteredOrders = computed(() => {
                                     <td>
                                         <button v-if="item.status === 'Chờ xác nhận' || item.status === 'Đã xác nhận'"
                                             class="btn btn-sm btn-outline-danger" @click="huyDon(item.id)"> Hủy
+                                        </button>
+                                        <button v-else-if="item.status === 'Hoàn tất'"
+                                            class="btn btn-sm btn-outline-primary mt-1" @click="muaLai(item)">Mua lại
                                         </button>
                                     </td>
                                 </tr>

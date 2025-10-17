@@ -1,11 +1,13 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
 const router = useRouter()
+const route = useRoute()
 const store = useStore()
 const currentUser = ref(null)
+const method = route.query.method || 'cod'
 
 onMounted(() => {
     const savedUser = localStorage.getItem('currentUser')
@@ -60,22 +62,33 @@ const goTo = (path) => router.push(path)
                 </div>
             </div>
         </header>
-
-        <!-- Nội dung thông báo -->
         <section class="container text-center py-5 mt-5">
             <div class="success-box bg-white rounded-4 shadow-sm p-5 mx-auto" style="max-width: 600px;">
                 <div class="text-success mb-3" style="font-size: 60px;">
                     <i class="bi bi-check-circle-fill"></i>
                 </div>
-                <h2 class="fw-bold text-success mb-3">Thanh toán thành công!</h2>
-                <p class="text-muted mb-4">
-                    Cảm ơn bạn đã mua hàng tại <strong>Toàn Thời Trang</strong>.<br />
-                    Đơn hàng của bạn đang được xử lý và sẽ giao sớm nhất có thể.
-                </p>
-                <div class="d-flex justify-content-center gap-3">
-                    <router-link to="/" class="btn btn-primary px-4">Về trang chủ</router-link>
-                    <router-link to="/user/order" class="btn btn-outline-success px-4">Xem đơn hàng</router-link>
+                <div v-if="method === 'cod'" class="mt-4">
+                    <h2 class="fw-bold text-success mb-3">Đặt hàng thành công!</h2>
+                    <p class="text-muted mb-4">
+                        Cảm ơn bạn đã mua hàng tại <strong>Toàn Thời Trang</strong>.<br />
+                        Đơn hàng của bạn đang được xử lý và sẽ giao sớm nhất có thể.
+                    </p>
+                    <div class="d-flex justify-content-center gap-3"> <router-link to="/"
+                            class="btn btn-primary px-4">Về trang chủ</router-link> <router-link to="/user/order"
+                            class="btn btn-outline-success px-4">Xem đơn hàng</router-link> </div>
                 </div>
+
+                <div v-else-if="method === 'bank'" class="mt-4">
+                    <h2 class="fw-bold text-success mb-3">Thanh toán thành công!</h2>
+                    <p class="text-muted mb-4">
+                        Thanh toán của bạn đã được xác nhận.<br />
+                        Cảm ơn bạn đã tin tưởng <strong>Toàn Thời Trang</strong>.
+                    </p>
+                    <div class="d-flex justify-content-center gap-3"> <router-link to="/"
+                            class="btn btn-primary px-4">Về trang chủ</router-link> <router-link to="/user/order"
+                            class="btn btn-outline-success px-4">Xem đơn hàng</router-link> </div>
+                </div>
+
             </div>
         </section>
     </div>

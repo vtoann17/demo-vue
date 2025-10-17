@@ -8,11 +8,11 @@ const store = useStore();
 
 onMounted(() => {
   localStorage.removeItem("currentUser");
-
+  localStorage.removeItem("cart");
   store.dispatch("cart/clearCart");
-
   setTimeout(() => router.push("/"), 1000);
 });
+
 </script>
 
 <template>

@@ -1,13 +1,13 @@
 {
   "products": [
     {
-      "id": "rg01",
       "name": "RG Wing Gundam Zero EW",
       "price": 850000,
       "image": "https://bizweb.dktcdn.net/100/456/060/files/mo-hinh-rg-wing-gundam-zero-ew-7.png?v=1731385974379",
       "category": "Real Grade (RG)",
       "description": "Real Grade Wing Gundam Zero EW tỉ lệ 1/144 – thiết kế cánh thiên thần nổi bật, khớp linh hoạt, chi tiết tinh xảo.",
-      "quantity": 4
+      "quantity": 5,
+      "id": "rg01"
     },
     {
       "id": "mg01",
@@ -16,16 +16,16 @@
       "image": "https://product.hstatic.net/200000326537/product/10371551a7_3e010e962a924d2ca7ea324793688c2d_master.jpg",
       "category": "Master Grade (MG)",
       "description": "Master Grade Freedom Gundam 2.0 tỉ lệ 1/100 – nổi bật với đôi cánh lớn, khung xương linh hoạt, tái hiện tuyệt đẹp phiên bản SEED.",
-      "quantity": 4
+      "quantity": 2
     },
     {
-      "id": "pg01",
       "name": "PG Unleashed RX-78-2 Gundam",
       "price": 5000000,
       "image": "https://product.hstatic.net/200000326537/product/pg-unleashed-rx-78-2-gundam-8_3135f704668d41e0aa7a9ecf7876ff1f_grande.jpg",
       "category": "Perfect Grade (PG)",
       "description": "Perfect Grade Unleashed RX-78-2 – kiệt tác Gundam tỉ lệ 1/60 với cơ chế LED, chi tiết cực cao và khả năng tạo dáng đỉnh cao.",
-      "quantity": 1
+      "quantity": 10,
+      "id": "pg01"
     },
     {
       "id": "hg02",
@@ -42,7 +42,7 @@
       "image": "https://m.media-amazon.com/images/I/71muGqdVxnL._AC_SL1421_.jpg",
       "category": "Real Grade (RG)",
       "description": "Wing Gundam Zero EW là phiên bản nâng cấp và hoàn thiện của Wing Gundam Zero, xuất hiện trong OVA Mobile Suit Gundam Wing: Endless Waltz. Thiết kế được thực hiện bởi Hajime Katoki, với phong cách mềm mại, tinh tế và mang nét \"thiên thần\" đặc trưng – nổi bật nhất là đôi cánh trắng khổng lồ tượng trưng cho tự do và tái sinh.",
-      "quantity": 0,
+      "quantity": 8,
       "id": "410c"
     },
     {
@@ -56,7 +56,35 @@
     }
   ],
   "cart": [],
-  "wishlist": [],
+  "wishlist": [
+    {
+      "id": "4808",
+      "userId": "09c1",
+      "productId": "410c",
+      "name": "Wing Gundam Zero EW",
+      "price": 1000000,
+      "image": "https://m.media-amazon.com/images/I/71muGqdVxnL._AC_SL1421_.jpg",
+      "category": "Real Grade (RG)"
+    },
+    {
+      "id": "28f4",
+      "userId": "09c1",
+      "productId": "pg01",
+      "name": "PG Unleashed RX-78-2 Gundam",
+      "price": 5000000,
+      "image": "https://product.hstatic.net/200000326537/product/pg-unleashed-rx-78-2-gundam-8_3135f704668d41e0aa7a9ecf7876ff1f_grande.jpg",
+      "category": "Perfect Grade (PG)"
+    },
+    {
+      "id": "98c8",
+      "userId": "09c1",
+      "productId": "rg01",
+      "name": "RG Wing Gundam Zero EW",
+      "price": 850000,
+      "image": "https://bizweb.dktcdn.net/100/456/060/files/mo-hinh-rg-wing-gundam-zero-ew-7.png?v=1731385974379",
+      "category": "Real Grade (RG)"
+    }
+  ],
   "categories": [
     {
       "id": "cat2",
@@ -75,7 +103,7 @@
     },
     {
       "id": "cat5",
-      "name": "High Grade (HG) ",
+      "name": "High Grade (HG)",
       "description": "Dòng mô hình 1/144 phổ biến, dễ lắp ráp, giá tốt cho người mới bắt đầu."
     }
   ],
@@ -89,11 +117,11 @@
     },
     {
       "name": "Toàn",
-      "username": "toan17",
+      "username": "toan9",
       "password": "170906",
       "role": "user",
       "avatar": "",
-      "age": 18,
+      "age": 20,
       "gender": "Nam",
       "email": "toanhvpk04080@gmail.com",
       "id": "09c1"
@@ -168,7 +196,7 @@
       "grand_total": 2639002,
       "paymentMethod": "cod",
       "paymentStatus": "Chưa thanh toán",
-      "status": "Chờ xác nhận",
+      "status": "Hoàn tất",
       "createdAt": "2025-10-16T16:12:51.199Z"
     },
     {
@@ -198,76 +226,16 @@
       "grand_total": 2639002,
       "paymentMethod": "bank",
       "paymentStatus": "Đã thanh toán",
-      "status": "Chờ xác nhận",
+      "status": "Hoàn tất",
       "createdAt": "2025-10-17T03:02:01.070Z"
     },
     {
-      "id": "1760671563159",
-      "userId": "3ede",
-      "name": "Hoàng Văn Toàn",
-      "phone": "0123456788",
-      "address": "tan bang",
-      "note": "237947",
-      "province_id": 210,
-      "district_id": 1787,
-      "wards_id": "400401",
-      "cart": [
-        {
-          "id": "e559",
-          "name": "MG Sky Defender EINTA-INDUSTRIES 1/72",
-          "price": 2600000,
-          "image": "https://fuwafuwaland.ca/cdn/shop/files/rn-image_picker_lib_temp_58a9e4e3-a5f1-4c02-836c-71340e7143ab.png?v=1753109415",
-          "category": "Master Grade (MG)",
-          "description": "Sky Defender là mẫu mecha tấn công – phòng thủ thế hệ mới do EINTA INDUSTRIES phát triển, mang phong cách tương lai với giáp góc cạnh, đôi cánh phản lực lớn và khả năng chiến đấu linh hoạt trên không.\nMô hình tỉ lệ 1/72, thiết kế chi tiết cao, khớp nối linh hoạt, hiệu ứng bay ấn tượng. Bộ kit nổi bật với vũ khí năng lượng kép, khiên phòng thủ, đôi cánh cơ động, cùng màu sơn chủ đạo trắng – xanh – xám kim loại tạo cảm giác mạnh mẽ, hiện đ",
-          "quantity": 1,
-          "userId": "3ede"
-        }
-      ],
-      "total": 2600000,
-      "ship_fee": 39002,
-      "grand_total": 2639002,
-      "paymentMethod": "cod",
-      "paymentStatus": "Chưa thanh toán",
-      "status": "Chờ xác nhận",
-      "createdAt": "2025-10-17T03:26:03.159Z"
-    },
-    {
-      "id": "1760671868767",
+      "id": "1760970846942",
       "userId": "09c1",
       "name": "Toàn",
-      "phone": "2390410487323",
+      "phone": "0383983952",
       "address": "tan bang",
-      "note": "32545567",
-      "province_id": 210,
-      "district_id": 1787,
-      "wards_id": "400401",
-      "cart": [
-        {
-          "id": "rg01",
-          "name": "RG Wing Gundam Zero EW",
-          "price": 850000,
-          "image": "https://bizweb.dktcdn.net/100/456/060/files/mo-hinh-rg-wing-gundam-zero-ew-7.png?v=1731385974379",
-          "category": "Real Grade (RG)",
-          "description": "Real Grade Wing Gundam Zero EW tỉ lệ 1/144 – thiết kế cánh thiên thần nổi bật, khớp linh hoạt, chi tiết tinh xảo.",
-          "quantity": 1,
-          "userId": "09c1"
-        }
-      ],
-      "total": 850000,
-      "ship_fee": 39002,
-      "grand_total": 889002,
-      "paymentMethod": "bank",
-      "paymentStatus": "Đã thanh toán",
-      "status": "Chờ xác nhận",
-      "createdAt": "2025-10-17T03:31:08.767Z"
-    },
-    {
-      "id": "1760671972766",
-      "userId": "09c1",
-      "name": "Toàn",
-      "phone": "23074394793",
-      "address": "tan bang",
-      "note": "297429435",
+      "note": "02879232",
       "province_id": 210,
       "district_id": 1787,
       "wards_id": "400401",
@@ -286,10 +254,250 @@
       "total": 1000000,
       "ship_fee": 39002,
       "grand_total": 1039002,
+      "paymentMethod": "cod",
+      "paymentStatus": "Chưa thanh toán",
+      "status": "Đã hủy",
+      "createdAt": "2025-10-20T14:34:06.942Z"
+    },
+    {
+      "id": "1760970880158",
+      "userId": "09c1",
+      "name": "Toàn",
+      "phone": "0383983952",
+      "address": "pham hung",
+      "note": "123565",
+      "province_id": 210,
+      "district_id": 1552,
+      "wards_id": "400103",
+      "cart": [
+        {
+          "id": "410c",
+          "name": "Wing Gundam Zero EW",
+          "price": 1000000,
+          "image": "https://m.media-amazon.com/images/I/71muGqdVxnL._AC_SL1421_.jpg",
+          "category": "Real Grade (RG)",
+          "description": "Wing Gundam Zero EW là phiên bản nâng cấp và hoàn thiện của Wing Gundam Zero, xuất hiện trong OVA Mobile Suit Gundam Wing: Endless Waltz. Thiết kế được thực hiện bởi Hajime Katoki, với phong cách mềm mại, tinh tế và mang nét \"thiên thần\" đặc trưng – nổi bật nhất là đôi cánh trắng khổng lồ tượng trưng cho tự do và tái sinh.",
+          "quantity": 1,
+          "userId": "09c1"
+        }
+      ],
+      "total": 1000000,
+      "ship_fee": 25502,
+      "grand_total": 1025502,
       "paymentMethod": "bank",
       "paymentStatus": "Đã thanh toán",
       "status": "Chờ xác nhận",
-      "createdAt": "2025-10-17T03:32:52.766Z"
+      "createdAt": "2025-10-20T14:34:40.158Z"
+    },
+    {
+      "id": "1760970946383",
+      "userId": "09c1",
+      "name": "toan",
+      "phone": "0383983952",
+      "address": "tan bang",
+      "note": "927383",
+      "province_id": 210,
+      "district_id": 1787,
+      "wards_id": "400401",
+      "cart": [
+        {
+          "id": "1fdd",
+          "userId": "09c1",
+          "productId": "410c",
+          "name": "Wing Gundam Zero EW",
+          "image": "https://m.media-amazon.com/images/I/71muGqdVxnL._AC_SL1421_.jpg",
+          "price": 1000000,
+          "quantity": 1,
+          "total": 1000000
+        }
+      ],
+      "total": 1000000,
+      "ship_fee": 39002,
+      "grand_total": 1039002,
+      "paymentMethod": "cod",
+      "paymentStatus": "Chưa thanh toán",
+      "status": "Đã hủy",
+      "createdAt": "2025-10-20T14:35:46.383Z"
+    },
+    {
+      "id": "1760971202895",
+      "userId": "09c1",
+      "name": "Toan",
+      "phone": "0383983952",
+      "address": "tan bang",
+      "note": "124567",
+      "province_id": 210,
+      "district_id": 1787,
+      "wards_id": "400401",
+      "cart": [
+        {
+          "id": "410c",
+          "name": "Wing Gundam Zero EW",
+          "price": 1000000,
+          "image": "https://m.media-amazon.com/images/I/71muGqdVxnL._AC_SL1421_.jpg",
+          "category": "Real Grade (RG)",
+          "description": "Wing Gundam Zero EW là phiên bản nâng cấp và hoàn thiện của Wing Gundam Zero, xuất hiện trong OVA Mobile Suit Gundam Wing: Endless Waltz. Thiết kế được thực hiện bởi Hajime Katoki, với phong cách mềm mại, tinh tế và mang nét \"thiên thần\" đặc trưng – nổi bật nhất là đôi cánh trắng khổng lồ tượng trưng cho tự do và tái sinh.",
+          "quantity": 1,
+          "userId": "09c1"
+        }
+      ],
+      "total": 1000000,
+      "ship_fee": 39002,
+      "grand_total": 1039002,
+      "paymentMethod": "cod",
+      "paymentStatus": "Chưa thanh toán",
+      "status": "Chờ xác nhận",
+      "createdAt": "2025-10-20T14:40:02.895Z"
+    },
+    {
+      "id": "1760971236278",
+      "userId": "09c1",
+      "name": "Toàn",
+      "phone": "0383983952",
+      "address": "Phạm hùng",
+      "note": "232556",
+      "province_id": 210,
+      "district_id": 1552,
+      "wards_id": "400103",
+      "cart": [
+        {
+          "id": "mg01",
+          "name": "MG Freedom Gundam 2.0",
+          "price": 1200000,
+          "image": "https://product.hstatic.net/200000326537/product/10371551a7_3e010e962a924d2ca7ea324793688c2d_master.jpg",
+          "category": "Master Grade (MG)",
+          "description": "Master Grade Freedom Gundam 2.0 tỉ lệ 1/100 – nổi bật với đôi cánh lớn, khung xương linh hoạt, tái hiện tuyệt đẹp phiên bản SEED.",
+          "quantity": 1,
+          "userId": "09c1"
+        }
+      ],
+      "total": 1200000,
+      "ship_fee": 25502,
+      "grand_total": 1225502,
+      "paymentMethod": "bank",
+      "paymentStatus": "Đã thanh toán",
+      "status": "Chờ xác nhận",
+      "createdAt": "2025-10-20T14:40:36.278Z"
+    },
+    {
+      "id": "1760971298639",
+      "userId": "09c1",
+      "name": "Toàn",
+      "phone": "0383983952",
+      "address": "Phạm hùng",
+      "note": "3934794",
+      "province_id": 210,
+      "district_id": 1552,
+      "wards_id": "400103",
+      "cart": [
+        {
+          "id": "0022",
+          "userId": "09c1",
+          "productId": "1fdd",
+          "name": "Wing Gundam Zero EW",
+          "image": "https://m.media-amazon.com/images/I/71muGqdVxnL._AC_SL1421_.jpg",
+          "price": 1000000,
+          "quantity": 1,
+          "total": 1000000
+        }
+      ],
+      "total": 1000000,
+      "ship_fee": 25502,
+      "grand_total": 1025502,
+      "paymentMethod": "cod",
+      "paymentStatus": "Chưa thanh toán",
+      "status": "Chờ xác nhận",
+      "createdAt": "2025-10-20T14:41:38.639Z"
+    },
+    {
+      "id": "1760971575735",
+      "userId": "09c1",
+      "name": "Toàn",
+      "phone": "0383983952",
+      "address": "tan bang",
+      "note": "973294",
+      "province_id": 210,
+      "district_id": 1787,
+      "wards_id": "400401",
+      "cart": [
+        {
+          "id": "410c",
+          "name": "Wing Gundam Zero EW",
+          "price": 1000000,
+          "image": "https://m.media-amazon.com/images/I/71muGqdVxnL._AC_SL1421_.jpg",
+          "category": "Real Grade (RG)",
+          "description": "Wing Gundam Zero EW là phiên bản nâng cấp và hoàn thiện của Wing Gundam Zero, xuất hiện trong OVA Mobile Suit Gundam Wing: Endless Waltz. Thiết kế được thực hiện bởi Hajime Katoki, với phong cách mềm mại, tinh tế và mang nét \"thiên thần\" đặc trưng – nổi bật nhất là đôi cánh trắng khổng lồ tượng trưng cho tự do và tái sinh.",
+          "quantity": 1,
+          "userId": "09c1"
+        }
+      ],
+      "total": 1000000,
+      "ship_fee": 39002,
+      "grand_total": 1039002,
+      "paymentMethod": "cod",
+      "paymentStatus": "Chưa thanh toán",
+      "status": "Đã hủy",
+      "createdAt": "2025-10-20T14:46:15.735Z"
+    },
+    {
+      "id": "1760971611430",
+      "userId": "09c1",
+      "name": "Toàn",
+      "phone": "0383983952",
+      "address": "Pham hung",
+      "note": "0382374",
+      "province_id": 210,
+      "district_id": 1552,
+      "wards_id": "400103",
+      "cart": [
+        {
+          "id": "mg01",
+          "name": "MG Freedom Gundam 2.0",
+          "price": 1200000,
+          "image": "https://product.hstatic.net/200000326537/product/10371551a7_3e010e962a924d2ca7ea324793688c2d_master.jpg",
+          "category": "Master Grade (MG)",
+          "description": "Master Grade Freedom Gundam 2.0 tỉ lệ 1/100 – nổi bật với đôi cánh lớn, khung xương linh hoạt, tái hiện tuyệt đẹp phiên bản SEED.",
+          "quantity": 1,
+          "userId": "09c1"
+        }
+      ],
+      "total": 1200000,
+      "ship_fee": 25502,
+      "grand_total": 1225502,
+      "paymentMethod": "bank",
+      "paymentStatus": "Đã thanh toán",
+      "status": "Chờ xác nhận",
+      "createdAt": "2025-10-20T14:46:51.430Z"
+    },
+    {
+      "id": "1760971670159",
+      "userId": "09c1",
+      "name": "Toan",
+      "phone": "0383983952",
+      "address": "Pham hung",
+      "note": "33454",
+      "province_id": 210,
+      "district_id": 1552,
+      "wards_id": "400103",
+      "cart": [
+        {
+          "id": "45f5",
+          "userId": "09c1",
+          "productId": "410c",
+          "name": "Wing Gundam Zero EW",
+          "image": "https://m.media-amazon.com/images/I/71muGqdVxnL._AC_SL1421_.jpg",
+          "price": 1000000,
+          "quantity": 1,
+          "total": 1000000
+        }
+      ],
+      "total": 1000000,
+      "ship_fee": 25502,
+      "grand_total": 1025502,
+      "paymentMethod": "cod",
+      "paymentStatus": "Chưa thanh toán",
+      "status": "Chờ xác nhận",
+      "createdAt": "2025-10-20T14:47:50.159Z"
     }
   ],
   "comments": [

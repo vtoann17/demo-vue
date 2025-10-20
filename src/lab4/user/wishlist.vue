@@ -27,7 +27,7 @@ const handleLogout = () => {
           <li @click="goTo('/')"><i class="bi bi-house-door"></i> Trang chủ</li>
           <li @click="goTo('/user/profile')"><i class="bi bi-person"></i> Hồ sơ</li>
           <li class="active"><i class="bi bi-heart"></i>Danh sách mong muốn</li>
-          <li @click="goTo('/user/order')"><i class="bi bi-heart"></i>Đơn hàng</li>
+          <li @click="goTo('/user/order')"><i class="bi bi-receipt"></i>Đơn hàng</li>
           <li @click="handleLogout"><i class="bi bi-box-arrow-right"></i> Đăng xuất</li>
         </ul>
       </nav>

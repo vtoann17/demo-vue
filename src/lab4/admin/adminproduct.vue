@@ -31,7 +31,7 @@
       products.value = response.data
     }
   }
-  </script>
+</script>
 
   <template>
     <div class="admin-layout">
@@ -41,9 +41,12 @@
         <nav>
           <ul>
             <li @click="goTo('/')"><i class="bi bi-house-door"></i> Trang chủ</li>
+            <li @click="goTo('/admin/statistic')">
+              <i class="bi bi-speedometer2"></i> Tổng quan
+            </li>
             <li @click="goTo('/admin/products')" class="active"><i class="bi bi-box"></i> Sản phẩm</li>
             <li @click="goTo('/admin/categories')"><i class="bi bi-tags"></i> Danh mục</li>
-            <li @click="goTo('/admin/users')" ><i class="bi bi-people"></i> Người dùng</li>
+            <li @click="goTo('/admin/users')"><i class="bi bi-people"></i> Người dùng</li>
             <li @click="goTo('/admin/orders')"><i class="bi bi-receipt"></i> Đơn hàng</li>
             <li @click="goTo('/logout')"><i class="bi bi-box-arrow-right"></i> Đăng xuất</li>
           </ul>
@@ -89,9 +92,7 @@
                     <td>
                       <img
                         :src="item.image || (item.images && item.images[0]) || 'https://via.placeholder.com/100?text=No+Image'"
-                        class="border rounded shadow-sm"
-                        style="width:90px;height:90px;object-fit:cover;"
-                      />
+                        class="border rounded shadow-sm" style="width:90px;height:90px;object-fit:cover;" />
                     </td>
                     <td class="fw-semibold text-start ps-3">{{ item.name }}</td>
                     <td><span class="badge bg-secondary">{{ item.category || 'Chưa có' }}</span></td>
@@ -124,103 +125,104 @@
     </div>
   </template>
 
-  <style scoped>
-  .admin-layout {
-    display: flex;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    background: #f1f3f6;
-  }
+<style scoped>
+.admin-layout {
+  display: flex;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: #f1f3f6;
+}
 
-  /* === Sidebar === */
-  .sidebar {
-    width: 230px;
-    background: linear-gradient(180deg, #0d6efd, #003d9c);
-    color: #fff;
-    padding-top: 20px;
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-  }
+/* === Sidebar === */
+.sidebar {
+  width: 230px;
+  background: linear-gradient(180deg, #0d6efd, #003d9c);
+  color: #fff;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
 
-  .sidebar .logo {
-    font-size: 22px;
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 25px;
-    letter-spacing: 1px;
-  }
+.sidebar .logo {
+  font-size: 22px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 25px;
+  letter-spacing: 1px;
+}
 
-  .sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
-  .sidebar li {
-    padding: 12px 25px;
-    cursor: pointer;
-    transition: 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+.sidebar li {
+  padding: 12px 25px;
+  cursor: pointer;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-  .sidebar li:hover,
-  .sidebar li.active {
-    background: rgba(255, 255, 255, 0.2);
-    border-left: 4px solid #fff;
-  }
+.sidebar li:hover,
+.sidebar li.active {
+  background: rgba(255, 255, 255, 0.2);
+  border-left: 4px solid #fff;
+}
 
-  .sidebar i {
-    font-size: 18px;
-  }
+.sidebar i {
+  font-size: 18px;
+}
 
-  /* === Content === */
-  .content {
-    flex: 1;
-    margin-left: 230px;
-    padding: 25px;
-    overflow-y: auto;
-  }
+/* === Content === */
+.content {
+  flex: 1;
+  margin-left: 230px;
+  padding: 25px;
+  overflow-y: auto;
+}
 
-  /* === Table === */
-  .table {
-    border-radius: 8px;
-    overflow: hidden;
-  }
+/* === Table === */
+.table {
+  border-radius: 8px;
+  overflow: hidden;
+}
 
-  .table th {
-    background: #e9f1ff;
-    font-weight: 600;
-    font-size: 15px;
-  }
+.table th {
+  background: #e9f1ff;
+  font-weight: 600;
+  font-size: 15px;
+}
 
-  .table td {
-    vertical-align: middle;
-  }
+.table td {
+  vertical-align: middle;
+}
 
-  .table tbody tr:hover {
-    background-color: #f6faff;
-    transition: 0.2s;
-  }
+.table tbody tr:hover {
+  background-color: #f6faff;
+  transition: 0.2s;
+}
 
-  /* === Fade animation === */
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.3s ease;
-  }
-  .fade-enter-from,
-  .fade-leave-to {
-    opacity: 0;
-  }
+/* === Fade animation === */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
 
-  img {
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  </style>
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+img {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+</style>

@@ -73,30 +73,35 @@ const loadOrders = async () => {
 }
 
 const huyDon = async (id) => {
-    const order = orders.value.find(o => o.id === id)
-    if (!order) return
-    if (order.status !== 'Chờ xác nhận' && order.status !== 'Đã xác nhận') {
-        message.value = "Không thể hủy đơn ở trạng thái này"
-        setTimeout(() => message.value = '', 1000)
-        return
+  const order = orders.value.find(o => o.id === id)
+  if (!order) return
+
+  if (order.status !== 'Chờ xác nhận' && order.status !== 'Đã xác nhận') {
+    message.value = "Không thể hủy đơn ở trạng thái này"
+    setTimeout(() => message.value = '', 1000)
+    return
+  }
+
+  const confirmCancel = confirm('Bạn có chắc muốn hủy đơn hàng này không?')
+  if (!confirmCancel) return
+
+  try {
+    const res = await axios.patch(`http://localhost:3000/orders/${id}`, {
+      status: 'Đã hủy'
+    })
+    if (res.status === 200) {
+      const index = orders.value.findIndex(o => o.id === id)
+      if (index !== -1) orders.value[index].status = 'Đã hủy'
+      message.value = `Đơn hàng #${id} đã được hủy!`
     }
+  } catch (e) {
+    console.error('Lỗi khi hủy đơn:', e)
+    message.value = 'Lỗi khi hủy đơn hàng'
+  }
 
-    const confirmCancel = confirm('Bạn có chắc muốn hủy đơn hàng này không?')
-    if (!confirmCancel) return
-
-    try {
-        const res = await axios.delete(`http://localhost:3000/orders/${id}`)
-        if (res.status === 200) {
-            orders.value = orders.value.filter(o => o.id !== id)
-            message.value = `Đơn hàng #${id} đã được hủy và xóa khỏi danh sách!`
-        }
-    } catch (e) {
-        console.error('Lỗi khi hủy đơn:', e)
-        message.value = 'Lỗi khi hủy đơn hàng'
-    }
-
-    setTimeout(() => (message.value = ''), 1500)
+  setTimeout(() => (message.value = ''), 1500)
 }
+
 
 const handleLogout = () => {
     localStorage.removeItem('currentUser')
@@ -118,7 +123,7 @@ const filteredOrders = computed(() => {
                     <li @click="goTo('/')"><i class="bi bi-house-door"></i> Trang chủ</li>
                     <li @click="goTo('/user/profile')"><i class="bi bi-person"></i> Hồ sơ</li>
                     <li @click="goTo('/user/wishlist')"><i class="bi bi-heart"></i>Danh sách mong muốn</li>
-                    <li class="active"><i class="bi bi-heart"></i>Đơn hàng</li>
+                    <li class="active"><i class="bi bi-receipt"></i>Đơn hàng</li>
                     <li @click="handleLogout"><i class="bi bi-box-arrow-right"></i> Đăng xuất</li>
                 </ul>
             </nav>
@@ -183,7 +188,7 @@ const filteredOrders = computed(() => {
                                         <button v-if="item.status === 'Chờ xác nhận' || item.status === 'Đã xác nhận'"
                                             class="btn btn-sm btn-outline-danger" @click="huyDon(item.id)"> Hủy
                                         </button>
-                                        <button v-else-if="item.status === 'Hoàn tất'"
+                                        <button v-else-if="item.status === 'Hoàn tất' || item.status === 'Đã hủy'"
                                             class="btn btn-sm btn-outline-primary mt-1" @click="muaLai(item)">Mua lại
                                         </button>
                                     </td>

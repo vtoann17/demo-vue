@@ -207,7 +207,7 @@ const handleThanhtoan = async () => {
       const existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
       existingOrders.push(order);
       localStorage.setItem('orders', JSON.stringify(existingOrders));
-      store.dispatch('cart/clearCart'); 
+      store.dispatch('cart/clearCart');
       router.push('/paymentSucces?method=cod');
     }
   } catch (error) {
@@ -293,9 +293,11 @@ const handleThanhtoan = async () => {
                 class="form-control form-control-sm text-center" style="width: 70px;" @change="checkStock(item)" />
 
               <p class="fw-semibold mb-0">{{ (item.price * item.quantity).toLocaleString() }}₫</p>
-              <button class="btn btn-sm btn-outline-danger" @click="remove(item.id)">
-                <i class="bi bi-trash"></i>
+              <button class="btn btn-sm btn-outline-danger d-flex align-items-center justify-content-center p-1"
+                @click="remove(item.id)">
+                <i class="bi bi-trash fs-5"></i>
               </button>
+
             </div>
           </div>
         </div>

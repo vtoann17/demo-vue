@@ -21,6 +21,7 @@ const fetchProduct = async (id) => {
 }
 
 onMounted(async () => {
+  const savedUser = localStorage.getItem('currentUser')
   const id = route.params.id
   await fetchProduct(id)
 

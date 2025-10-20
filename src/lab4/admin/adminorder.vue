@@ -60,6 +60,9 @@ const filteredOrders = computed(() => {
       <nav>
         <ul>
           <li @click="goTo('/')"><i class="bi bi-house-door"></i> Trang chủ</li>
+          <li @click="goTo('/admin/statistic')">
+                        <i class="bi bi-speedometer2"></i> Tổng quan
+                    </li>
           <li @click="goTo('/admin/products')"><i class="bi bi-box"></i> Sản phẩm</li>
           <li @click="goTo('/admin/categories')"><i class="bi bi-tags"></i> Danh mục</li>
           <li @click="goTo('/admin/users')"><i class="bi bi-people"></i> Người dùng</li>

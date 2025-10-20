@@ -23,7 +23,8 @@ import Order from './lab4/user/order.vue';
 import Payment from './lab4/payment.vue';
 import PaymentSucces from './lab4/paymentSucces.vue';
 import PaymentFailed from './lab4/paymentFailed.vue';
-import AdminCustomerstats from "./lab4/admin/CustomerStats.vue";
+import Adminstatistic from "./lab4/admin/Statistic.vue";
+
 
 
 const routes = [
@@ -36,9 +37,9 @@ const routes = [
   { path: '/addproduct', name: 'Addproduct', component: Addproduct, meta: { isAuth: true } },
   { path: '/admin/products', name: 'AdminProducts', component: AdminProducts, meta: { isAuth: true, requiresAdmin: true } },
   { path: '/admin/categories', name: 'AdminCategories', component: AdminCategories, meta: { isAuth: true, requiresAdmin: true } },
-  { path: '/admin/customerstats', name: 'AdminCustomerstats', component: AdminCustomerstats, meta: { isAuth: true, requiresAdmin: true } },
   { path: '/admin/users', name: 'Adminuser', component: Adminuser, meta: { isAuth: true, requiresAdmin: true } },
   { path: '/admin/orders', name: 'Adminorders', component: Adminorder, meta: { isAuth: true, requiresAdmin: true } },
+  { path: '/admin/statistic', name: 'Adminstatistic', component: Adminstatistic, meta: { isAuth: true, requiresAdmin: true } },
   { path: '/editproduct/:id', name: 'Editproduct', component: Editproduct, meta: { isAuth: true } },
   { path: '/products/:id', name: 'ProductDetail', component: Productdetail, meta: { isAuth: false } },
   { path: '/addcategory', name: 'Addcategory', component: Addcategory, meta: { isAuth: true } },

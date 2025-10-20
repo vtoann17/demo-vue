@@ -38,9 +38,12 @@ const handleDelete = async (id) => {
       <nav>
         <ul>
           <li @click="goTo('/')"><i class="bi bi-house-door"></i> Trang chủ</li>
-          <li @click="goTo('/admin/products')" ><i class="bi bi-box"></i> Sản phẩm</li>
+          <li @click="goTo('/admin/statistic')">
+            <i class="bi bi-speedometer2"></i> Tổng quan
+          </li>
+          <li @click="goTo('/admin/products')"><i class="bi bi-box"></i> Sản phẩm</li>
           <li @click="goTo('/admin/categories')" class="active"><i class="bi bi-tags"></i> Danh mục</li>
-          <li @click="goTo('/admin/users')" ><i class="bi bi-people"></i> Người dùng</li>
+          <li @click="goTo('/admin/users')"><i class="bi bi-people"></i> Người dùng</li>
           <li @click="goTo('/admin/orders')"><i class="bi bi-receipt"></i> Đơn hàng</li>
           <li @click="goTo('/logout')"><i class="bi bi-box-arrow-right"></i> Đăng xuất</li>
         </ul>
@@ -198,6 +201,7 @@ const handleDelete = async (id) => {
 .fade-leave-active {
   transition: opacity 0.3s ease;
 }
+
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;

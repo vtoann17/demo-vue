@@ -25,23 +25,27 @@ onMounted(async () => {
 const topProducts = ref([])
 
 const loadTopProducts = async () => {
-    const { data: orders } = await axios.get(`http://localhost:3000/orders`)
-    const { data: products } = await axios.get(`http://localhost:3000/products`)
+  const ordersRes = await axios.get(`http://localhost:3000/orders`)
+  const productsRes = await axios.get(`http://localhost:3000/products`)
 
+  if (ordersRes.status === 200 && productsRes.status === 200) {
+    const orders = ordersRes.data
+    const products = productsRes.data
     const count = {}
 
+    
     for (const o of orders) {
-        for (const i of o.cart) {
-            count[i.id] = (count[i.id] || 0) + i.quantity
-        }
+      for (const i of o.cart) {
+        count[i.id] = (count[i.id] || 0) + i.quantity
+      }
     }
 
     topProducts.value = products
-        .map(p => ({ ...p, sold: count[p.id] || 0 }))
-        .filter(p => p.sold > 0)
-        .sort((a, b) => b.sold - a.sold)
-        .slice(0, 5)
-
+      .map(p => ({ ...p, sold: count[p.id] || 0 }))
+      .filter(p => p.sold > 0)
+      .sort((a, b) => b.sold - a.sold)
+      .slice(0, 5)
+  }
 }
 
 const loadProducts = async () => {

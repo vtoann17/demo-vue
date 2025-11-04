@@ -20,7 +20,6 @@ const goTo = (path) => router.push(path)
 
 <template>
     <div class="payment-success-page">
-        <!-- Header giống trang Home -->
         <header class="main-header shadow-sm bg-white">
             <div class="header-inner container d-flex justify-content-between align-items-center py-3">
                 <h3 class="fw-bold text-primary mb-0">Cửa hàng</h3>

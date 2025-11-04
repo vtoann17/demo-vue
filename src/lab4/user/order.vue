@@ -130,7 +130,7 @@ const filteredOrders = computed(() => {
         </aside>
         <main class="content">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3 class="fw-bold text-primary mb-0">Quản lý đơn hàng</h3>
+                <h3 class="fw-bold text-primary mb-0">Đơn hàng của tôi</h3>
             </div>
 
             <div class="card shadow border-0 rounded-4 overflow-hidden">

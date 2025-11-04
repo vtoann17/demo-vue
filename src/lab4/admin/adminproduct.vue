@@ -35,7 +35,6 @@
 
   <template>
     <div class="admin-layout">
-      <!-- Sidebar -->
       <aside class="sidebar">
         <h3 class="logo">Admin Panel</h3>
         <nav>

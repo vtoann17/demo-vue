@@ -122,7 +122,7 @@ const filteredOrders = computed(() => {
                   </td>
                   <td>
                     <select v-model="item.status" @change="updateStatus(item)"
-                      class="form-select form-select-sm text-center fw-semibold" :class="{
+                      class="form-select form-select-sm text-center fw-semibold"   :disabled="item.status === 'Đã hủy'" :class="{
                         'text-secondary': item.status === 'Chờ xác nhận',
                         'text-primary': item.status === 'Đã xác nhận',
                         'text-info': item.status === 'Đang giao hàng',

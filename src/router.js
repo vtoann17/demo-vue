@@ -59,7 +59,7 @@ const router = createRouter({
   routes
 })
 
-// Kiểm tra đăng nhập
+
 router.beforeEach((to, from, next) => {
   const currentUser = localStorage.getItem('currentUser');
   if (to.meta.isAuth) {
@@ -73,7 +73,7 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
-// Kiểm tra quyền admin
+
 router.beforeEach((to, from, next) => {
   const currentUser = localStorage.getItem('currentUser');
   const user = currentUser ? JSON.parse(currentUser) : null;

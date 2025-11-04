@@ -17,6 +17,7 @@ const handleLogout = () => {
 }
 
 onMounted(async () => {
+    loadTopProducts()
     const [userRes, catRes, prodRes, orderRes] = await Promise.all([
         axios.get('http://localhost:3000/users'),
         axios.get('http://localhost:3000/categories'),
@@ -45,6 +46,31 @@ onMounted(async () => {
     })
     customers.value = Object.values(spendMap)
 })
+const topProducts = ref([])
+
+const loadTopProducts = async () => {
+  const ordersRes = await axios.get(`http://localhost:3000/orders`)
+  const productsRes = await axios.get(`http://localhost:3000/products`)
+
+  if (ordersRes.status === 200 && productsRes.status === 200) {
+    const orders = ordersRes.data
+    const products = productsRes.data
+    const count = {}
+
+    for (const o of orders) {
+      for (const i of o.cart) {
+        count[i.id] = (count[i.id] || 0) + i.quantity
+      }
+    }
+
+    topProducts.value = products
+      .map(p => ({ ...p, sold: count[p.id] || 0 }))
+      .filter(p => p.sold > 0)
+      .sort((a, b) => b.sold - a.sold)
+      .slice(0, 5)
+  }
+}
+
 </script>
 
 <template>
@@ -131,8 +157,23 @@ onMounted(async () => {
                     </table>
                 </div>
             </div>
+            <section class="bestsellers container py-5">
+            <h2 class="section-title text-center fw-bold mb-4">Sản phẩm bán chạy</h2>
+            <div class="row g-4">
+                <div v-for="p in topProducts" :key="p.id" class="col-6 col-md-3 col-lg-2">
+                    <div class="product-card p-3 text-center bg-white shadow-sm rounded-4">
+                        <img :src="p.image" :alt="p.name" class="img-fluid rounded mb-2"
+                            style="height: 200px; object-fit: cover;" />
+                        <h6 class="fw-semibold">{{ p.name }}</h6>
+                        <p class="text-muted mb-1">{{ p.price.toLocaleString() }}₫</p>
+                        <p class="small text-success mb-2">Đã bán: {{ p.sold }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
         </main>
     </div>
+     
 </template>
 
 <style scoped>
@@ -284,5 +325,26 @@ onMounted(async () => {
 .stat-card:hover {
   transform: translateY(-3px);
 }
+.card.mt-6 {
+  margin-top: 30px;
+}
+
+.bestsellers {
+  margin-top: 10px;
+}
+
+.product-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.product-card img {
+  border-radius: 12px;
+}
+
 
 </style>
